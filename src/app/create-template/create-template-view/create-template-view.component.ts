@@ -64,7 +64,7 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
           console.log((this.eleParent.nativeElement as HTMLDivElement).innerHTML);
         });
         setTimeout(() => {
-          html2canvas(this.ele.nativeElement).then((canvas) => {
+          html2canvas(this.ele.nativeElement).then((canvas: any) => {
             const a = this.renderer2.createElement('a');
             a.href = canvas.toDataURL('image/png');
             a.download = 'test.png';
