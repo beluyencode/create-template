@@ -4,18 +4,19 @@
   {{this.createTemplateService.currentHeight}}
 </div> -->
 <div #eleViewParent [ngStyle]="{
-  'aspect-ratio': background.scale,
-  width: background.scale === typeScreen.PC ? '100%' :'auto',
-  height: background.scale === typeScreen.PC ? 'auto' :'100%'
+  'aspect-ratio': this.createTemplateService.background.scale,
+  width: this.createTemplateService.background.scale === typeScreen.PC ? '100%' :'auto',
+  height: this.createTemplateService.background.scale === typeScreen.PC ? 'auto' :'100%',
+  overflow: 'hidden'
 }">
   <div class='view' [style]="{
     'background-color': 'white',
     position: 'relative',
     'user-select': 'none'
   }" (wheel)="wheel($event)" (click)="selectBackground()" #eleView [ngStyle]="{
-    'aspect-ratio': background.scale,
-    width: background.scale === typeScreen.PC ? '100%' :'auto',
-    height: background.scale === typeScreen.PC ? 'auto' :'100%'
+    'aspect-ratio': this.createTemplateService.background.scale,
+    width: this.createTemplateService.background.scale === typeScreen.PC ? '100%' :'auto',
+    height: this.createTemplateService.background.scale === typeScreen.PC ? 'auto' :'100%'
   }" (mouseover)="mouseOver($event)">
     <img [style]="{
       width: '100%',

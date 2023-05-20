@@ -48,10 +48,7 @@ export class CreateTemplateListComponent implements OnInit {
   }
 
   save() {
-    console.log({
-      background: this.createTemplateService.background,
-      listElement: this.createTemplateService.listElement
-    });
+    this.createTemplateService.save_config.next(true);
   }
 
   saveToImg() {
@@ -59,8 +56,6 @@ export class CreateTemplateListComponent implements OnInit {
   }
 
   deleteELe(ele: Template) {
-    console.log(ele);
-
     this.createTemplateService.changeTemplate(TypeAction.DELETE, ele);
   }
 

@@ -14,6 +14,14 @@
             </div>
             <div class='item'>
                 <div class='item-title'>
+                    Upload
+                </div>
+                <div class='item-data'>
+                    <input type="file" (change)='uploadImg($event)' accept="image/png, image/gif, image/jpeg">
+                </div>
+            </div>
+            <div class='item'>
+                <div class='item-title'>
                     tỉ lệ màn hình
                 </div>
                 <div class='item-data'>
@@ -42,6 +50,14 @@
                     </div>
                     <div class='item-data'>
                         <input type="text" [(ngModel)]='activeTemplate.url'>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Upload
+                    </div>
+                    <div class='item-data'>
+                        <input type="file" (change)='uploadImg($event)' accept="image/png, image/gif, image/jpeg">
                     </div>
                 </div>
                 <div class='item'>
@@ -75,6 +91,14 @@
                     <div class='item-data'>
                         <input type="number" class='width-100' [(ngModel)]='activeTemplate.rotate'>
                         <span class='item-data-input-color-title'>deg</span>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Z
+                    </div>
+                    <div class='item-data'>
+                        <input type="number" [(ngModel)]='activeTemplate.zIndex'>
                     </div>
                 </div>
             </ng-container>
@@ -154,6 +178,66 @@
                     <div class='item-data'>
                         <input type="number" class='width-100' [(ngModel)]='activeTemplate.rotate'>
                         <span class='item-data-input-color-title'>deg</span>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Z
+                    </div>
+                    <div class='item-data'>
+                        <input type="number" [(ngModel)]='activeTemplate.zIndex'>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="activeTemplate.type === typeTemplate[2]">
+                <div class='item'>
+                    <div class='item-title'>
+                        Chiều rộng
+                    </div>
+                    <div class='item-data'>
+                        <input type="number" min='0' [(ngModel)]='activeTemplate.width'>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Chiều dài
+                    </div>
+                    <div class='item-data'>
+                        <input type="number" min='0' [(ngModel)]='activeTemplate.height'>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Màu nền
+                    </div>
+                    <div class='item-data'>
+                        <input type="color" [(ngModel)]='activeTemplate.background'>
+                        <span class='item-data-input-color-title'>{{activeTemplate.background}}</span>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Bo góc
+                    </div>
+                    <div class='item-data'>
+                        <input type="number" [(ngModel)]='activeTemplate.borderRadius'>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Rotate (deg)
+                    </div>
+                    <div class='item-data'>
+                        <input type="number" class='width-100' [(ngModel)]='activeTemplate.rotate'>
+                        <span class='item-data-input-color-title'>deg</span>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Z
+                    </div>
+                    <div class='item-data'>
+                        <input type="number" [(ngModel)]='activeTemplate.zIndex'>
                     </div>
                 </div>
             </ng-container>

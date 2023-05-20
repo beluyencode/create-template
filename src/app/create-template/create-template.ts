@@ -16,6 +16,7 @@ export interface Template {
     rotate: number;
     padding: number;
     borderRadius: number;
+    zIndex: number
 }
 
 export class Template implements Template {
@@ -36,7 +37,8 @@ export class Template implements Template {
         this.rotate = 0;
         this.padding = 0;
         this.borderRadius = 0
-        this.url = ''
+        this.url = '';
+        this.zIndex = 0;
     }
 
     clone() {
@@ -59,14 +61,23 @@ export interface BackgroundTemplate {
 export class BackgroundTemplate implements BackgroundTemplate {
     constructor() {
         this.name = 'background';
-        this.url = './../../../../assets/create-template/background.jpg';
+        this.url = '';
         this.scale = TypeScreen.PC
     }
 }
 
+export const apiUrl = {
+    origin: 'https://api.dev.qrclc.com',
+    uploadImg: '/static/upload',
+    static: '/static/',
+    update: '/api/template/update',
+    get: '/api/template/get'
+}
+
 export enum TypeTemplate {
     TEXT = 'text',
-    IMAGE = 'img'
+    IMAGE = 'img',
+    BACKGROUND = 'background'
 }
 
 export enum TypeAction {

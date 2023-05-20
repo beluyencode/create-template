@@ -128,9 +128,7 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
       this._listeners.push(
         this.renderer.listen(document, 'mousemove', (e) => {
           let angle = Math.atan2(e.pageX - boxCenter.x, - (e.pageY - boxCenter.y)) * (180 / Math.PI);
-          console.log(Math.round(angle % 90));
           this.data.rotate = Math.round(angle);
-
         })
       )
       this.cancelListenMouseUp();

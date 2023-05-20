@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, Rend
 import { BackgroundTemplate, Template, TypeScreen } from '../create-template';
 import { CreateTemplateService } from '../create-template.service';
 import html2canvas from 'html2canvas';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-template-view',
@@ -13,14 +14,15 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
   @ViewChild('eleView') ele: ElementRef;
   @ViewChild('eleViewParent') eleParent: ElementRef;
   listTemplate: Template[];
-  background: BackgroundTemplate;
   typeScreen = TypeScreen;
   scale: number;
   loading = false;
+  idTemplate = '';
 
   constructor(
     public createTemplateService: CreateTemplateService,
-    private renderer2: Renderer2
+    private renderer2: Renderer2,
+    private toastr: ToastrService
   ) { }
 
   ngAfterViewInit(): void {
@@ -35,6 +37,11 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.createTemplateService.listen_id_template().subscribe((res: string) => {
+      if (res !== '') {
+        this.idTemplate = res;
+      }
+    })
     this.createTemplateService.listen_change_scale_screen().subscribe((res: any) => {
       if (res) {
         setTimeout(() => {
@@ -61,10 +68,7 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
         }
         this.changeScale();
         setTimeout(() => {
-          console.log((this.eleParent.nativeElement as HTMLDivElement).innerHTML);
-        });
-        setTimeout(() => {
-          html2canvas(this.ele.nativeElement).then((canvas: any) => {
+          html2canvas(this.ele.nativeElement, { useCORS: true }).then((canvas: any) => {
             const a = this.renderer2.createElement('a');
             a.href = canvas.toDataURL('image/png');
             a.download = 'test.png';
@@ -80,8 +84,41 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
           })
         });
       }
+    });
+    this.createTemplateService.listen_save_config().subscribe((res: any) => {
+      this.edit = !res;
+      if (res) {
+        this.createTemplateService.active_template.next(null);
+        this.renderer2.setStyle(this.ele.nativeElement, 'width', 99 + '%');
+        this.loading = true;
+        if (this.createTemplateService.background.scale === this.typeScreen.PC) {
+          this.renderer2.setStyle(this.ele.nativeElement, 'width', 2560 + 'px');
+        } else {
+          this.renderer2.setStyle(this.ele.nativeElement, 'width', 1059 + 'px');
+          this.renderer2.setStyle(this.ele.nativeElement, 'height', 2118 + 'px');
+        }
+        this.changeScale();
+        setTimeout(() => {
+          this.createTemplateService.saveConfig({
+            html_content: (this.eleParent.nativeElement as HTMLDivElement).innerHTML,
+            config: {
+              background: this.createTemplateService.background,
+              listElement: this.createTemplateService.listElement
+            }
+          }, this.idTemplate).subscribe((res: any) => {
+            this.renderer2.setStyle(this.ele.nativeElement, 'width', '100%');
+            if (this.createTemplateService.background.scale === this.typeScreen.MOBILE) {
+              this.renderer2.setStyle(this.ele.nativeElement, 'height', '100%');
+            }
+            this.changeScale();
+            this.loading = false;
+            this.createTemplateService.save_config.next(false);
+            this.toastr.success('Upload ảnh thành công');
+
+          })
+        });
+      }
     })
-    this.background = this.createTemplateService.background;
     this.createTemplateService.listen_full_screen().subscribe((res: boolean) => {
       if (res && this.createTemplateService.background.scale === TypeScreen.PC) {
         if (this.ele.nativeElement.requestFullscreen) {

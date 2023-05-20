@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { BackgroundTemplate, Template, TypeAction, TypeTemplate } from './create-template';
+import { BackgroundTemplate, Template, TypeAction, TypeTemplate, apiUrl } from './create-template';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class CreateTemplateService {
@@ -17,20 +18,22 @@ export class CreateTemplateService {
   mouse_over_view;
   save_to_img;
   changeScaleScreen;
+  save_config;
+  idTemplate;
 
-  constructor() {
+  constructor(
+    private http: HttpClient
+  ) {
     this.fullScreen = new BehaviorSubject<any>(false);
     this.active_template = new BehaviorSubject<any>(null);
     this.mouse_over_view = new BehaviorSubject<any>(false);
     this.save_to_img = new BehaviorSubject<any>(false);
     this.changeScaleScreen = new BehaviorSubject<any>(null);
+    this.save_config = new BehaviorSubject<any>(null);
+    this.idTemplate = new BehaviorSubject<any>('');
     // this.listElement = [...Array(5)].map((ele: any, index: number) => {
     //   return new Template('element' + index);
     // });
-    this.listElement = [
-      new Template('element', 10),
-      new Template('element 2', 60),
-    ]
     this.load_list_element = new BehaviorSubject<any>(this.listElement);
   }
 
@@ -58,9 +61,15 @@ export class CreateTemplateService {
     return this.changeScaleScreen.asObservable();
   }
 
-  changeTemplate(action: TypeAction, template: Template | BackgroundTemplate,) {
-    console.log(template instanceof Template);
+  listen_save_config() {
+    return this.save_config.asObservable();
+  }
 
+  listen_id_template() {
+    return this.idTemplate.asObservable();
+  }
+
+  changeTemplate(action: TypeAction, template: Template | BackgroundTemplate,) {
     if (template instanceof Template) {
       switch (action) {
         case TypeAction.COPY:
@@ -99,5 +108,25 @@ export class CreateTemplateService {
       new Template('element ' + (this.listElement.length + 1), 70),
     ];
     this.load_list_element.next(this.listElement);
+  }
+
+  saveConfig(body: any, id: string) {
+    return this.http.post(apiUrl.origin + apiUrl.update, body, {
+      params: {
+        id: id
+      }
+    })
+  }
+
+  uploadImg(body: any) {
+    return this.http.post(apiUrl.origin + apiUrl.uploadImg, body)
+  }
+
+  getData(id: string) {
+    return this.http.get(apiUrl.origin + apiUrl.get, {
+      params: {
+        id: id
+      }
+    })
   }
 }

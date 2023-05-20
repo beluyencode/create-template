@@ -15,7 +15,7 @@
 
     .info-view {
         overflow-y: auto;
-        height: calc(100% - 40px);
+        height: calc(100% - 60px);
     }
 
     .action {
@@ -38,7 +38,7 @@
     }
 
     .item {
-        width: 100%;
+        width: calc(100% - 20px);
         border-bottom: 1px solid #e5e5e5;
         padding: 8px 10px;
         font-size: 14px;

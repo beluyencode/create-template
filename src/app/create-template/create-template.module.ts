@@ -8,7 +8,10 @@ import { CreateTemplateViewComponent } from './create-template-view/create-templ
 import { FormsModule } from '@angular/forms';
 import { CreateTemplateViewEleComponent } from './create-template-view/create-template-view-ele/create-template-view-ele.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-
+import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     CreateTemplateComponent,
@@ -20,7 +23,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
   imports: [
     CommonModule,
     FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    HttpClientModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
   ],
   exports: [
     CreateTemplateComponent
