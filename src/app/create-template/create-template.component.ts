@@ -18,7 +18,7 @@ export class CreateTemplateComponent implements OnInit {
 
 
   @HostListener('window:message', ['$event'])
-  onMessage(event: any) {
+  onMessage(event: MessageEvent) {
     this.createTemplateService.idTemplate.next(event.data);
   }
 
@@ -42,20 +42,19 @@ export class CreateTemplateComponent implements OnInit {
           }
         })
       } else {
-        this.createTemplateService.getData('tpl_chk8f4223aks7397umrg').subscribe((res: any) => {
-          if (res?.data?.config) {
-            if (res?.data?.config?.background) {
-              this.createTemplateService.background = res?.data?.config?.background;
-              this.createTemplateService.active_template.next(null);
-            }
-            if (res?.data?.config?.listElement) {
-              this.createTemplateService.listElement = res?.data?.config?.listElement;
-              this.createTemplateService.load_list_element.next(this.createTemplateService.listElement);
-            }
-          }
-        })
+        // this.createTemplateService.getData('tpl_chk8f4223aks7397umrg').subscribe((res: any) => {
+        //   if (res?.data?.config) {
+        //     if (res?.data?.config?.background) {
+        //       this.createTemplateService.background = res?.data?.config?.background;
+        //       this.createTemplateService.active_template.next(null);
+        //     }
+        //     if (res?.data?.config?.listElement) {
+        //       this.createTemplateService.listElement = res?.data?.config?.listElement;
+        //       this.createTemplateService.load_list_element.next(this.createTemplateService.listElement);
+        //     }
+        //   }
+        // })
       }
-
     })
   }
 

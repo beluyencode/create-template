@@ -104,7 +104,9 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
             config: {
               background: this.createTemplateService.background,
               listElement: this.createTemplateService.listElement
-            }
+            },
+            width: this.createTemplateService.background.scale === this.typeScreen.PC ? 2560 : 1059,
+            height: this.createTemplateService.background.scale === this.typeScreen.PC ? 1440 : 2118,
           }, this.idTemplate).subscribe((res: any) => {
             this.renderer2.setStyle(this.ele.nativeElement, 'width', '100%');
             if (this.createTemplateService.background.scale === this.typeScreen.MOBILE) {
