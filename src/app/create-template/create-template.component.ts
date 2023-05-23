@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import { TypeScreen } from './create-template';
+import { Template, TypeScreen } from './create-template';
 import { CreateTemplateService } from './create-template.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -19,7 +19,35 @@ export class CreateTemplateComponent implements OnInit {
 
   @HostListener('window:message', ['$event'])
   onMessage(event: MessageEvent) {
-    this.createTemplateService.idTemplate.next(event.data);
+    if (event.data.event) {
+      this.createTemplateService.listValueDynamic = [
+        {
+          value: '{{name}}',
+          label: 'Tên'
+        }, {
+          value: '{{phone}}',
+          label: 'Số điện thoại'
+        }, {
+          value: '{{address}}',
+          label: 'Địa chỉ'
+        }, {
+          value: '{{rank["name"]}}',
+          label: 'Hạng khách hàng'
+        },
+        ...event.data.event.params_name.map((ele: string) => {
+          return {
+            value: `{{params["${ele}"] }}`,
+            label: ele
+          }
+        })
+      ];
+      this.createTemplateService.listQrValueDynamic = [{
+        value: 'https://api.dev.qrclc.com/api/guest/qrcode/{{_id}}',
+        label: 'QR code'
+      }]
+      console.log(this.createTemplateService.listValueDynamic, this.createTemplateService.listQrValueDynamic);
+    }
+    this.createTemplateService.idTemplate.next(event.data.idTemplate);
   }
 
   constructor(
@@ -36,24 +64,30 @@ export class CreateTemplateComponent implements OnInit {
               this.createTemplateService.active_template.next(null);
             }
             if (res?.data?.config?.listElement) {
-              this.createTemplateService.listElement = res?.data?.config?.listElement;
+              const newTemplate = new Template('', 0);
+              this.createTemplateService.listElement = res?.data?.config?.listElement.map((ele: any) => {
+                return newTemplate.clone().convertType(ele);
+              });
               this.createTemplateService.load_list_element.next(this.createTemplateService.listElement);
             }
           }
         })
       } else {
-        // this.createTemplateService.getData('tpl_chk8f4223aks7397umrg').subscribe((res: any) => {
-        //   if (res?.data?.config) {
-        //     if (res?.data?.config?.background) {
-        //       this.createTemplateService.background = res?.data?.config?.background;
-        //       this.createTemplateService.active_template.next(null);
-        //     }
-        //     if (res?.data?.config?.listElement) {
-        //       this.createTemplateService.listElement = res?.data?.config?.listElement;
-        //       this.createTemplateService.load_list_element.next(this.createTemplateService.listElement);
-        //     }
-        //   }
-        // })
+        this.createTemplateService.getData('tpl_chk8f4223aks7397umrg').subscribe((res: any) => {
+          if (res?.data?.config) {
+            if (res?.data?.config?.background) {
+              this.createTemplateService.background = res?.data?.config?.background;
+              this.createTemplateService.active_template.next(null);
+            }
+            if (res?.data?.config?.listElement) {
+              const newTemplate = new Template('', 0);
+              this.createTemplateService.listElement = res?.data?.config?.listElement.map((ele: any) => {
+                return newTemplate.clone().convertType(ele);
+              });
+              this.createTemplateService.load_list_element.next(this.createTemplateService.listElement);
+            }
+          }
+        })
       }
     })
   }

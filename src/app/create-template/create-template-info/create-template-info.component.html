@@ -60,6 +60,17 @@
                         <input type="file" (change)='uploadImg($event)' accept="image/png, image/gif, image/jpeg">
                     </div>
                 </div>
+                <div class="item">
+                    <div class='item-title'>
+                        Dự liệu động
+                    </div>
+                    <div class='item-data'>
+                        <ng-select [(ngModel)]="activeTemplate.url" [clearable]='false' class='custom-ngselect'>
+                            <ng-option *ngFor="let item of this.createTemplateService.listQrValueDynamic"
+                                [value]="item.value">{{item.label}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
                 <div class='item'>
                     <div class='item-title'>
                         Chiều rộng
@@ -109,6 +120,17 @@
                     </div>
                     <div class='item-data'>
                         <textarea name="" id="" cols="30" rows="3" [(ngModel)]='activeTemplate.content'></textarea>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class='item-title'>
+                        Dự liệu động
+                    </div>
+                    <div class='item-data'>
+                        <ng-select [(ngModel)]="activeTemplate.content" [clearable]='false' class='custom-ngselect'>
+                            <ng-option *ngFor="let item of this.createTemplateService.listValueDynamic"
+                                [value]="item.value">{{item.label}}</ng-option>
+                        </ng-select>
                     </div>
                 </div>
                 <div class='item'>

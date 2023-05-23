@@ -46,6 +46,12 @@ export class Template implements Template {
         Object.setPrototypeOf(cloned, this.constructor.prototype);
         return cloned;
     }
+
+    convertType(template: any) {
+        const cloned = Object.assign(this, template);
+        Object.setPrototypeOf(cloned, this.constructor.prototype);
+        return cloned;
+    }
 }
 
 export function ObjectId(m = Math, d = Date, h = 16, s = (sELe: any) => m.floor(sELe).toString(h)) {

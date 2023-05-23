@@ -7,7 +7,9 @@ import { HttpClient } from '@angular/common/http';
 export class CreateTemplateService {
   //data
   background: BackgroundTemplate = new BackgroundTemplate();
-  listElement: Template[] = []
+  listElement: Template[] = [];
+  listValueDynamic: any[] = [];
+  listQrValueDynamic: any[] = []
   scaleDefault = 854;
   currentWidth = 0;
   currentHeight = 0;
@@ -70,6 +72,8 @@ export class CreateTemplateService {
   }
 
   changeTemplate(action: TypeAction, template: Template | BackgroundTemplate,) {
+    console.log(123);
+
     if (template instanceof Template) {
       switch (action) {
         case TypeAction.COPY:
@@ -105,7 +109,7 @@ export class CreateTemplateService {
   addTemplate() {
     this.listElement = [
       ...this.listElement,
-      new Template('element ' + (this.listElement.length + 1), 70),
+      new Template('element ' + (this.listElement.length + 1), 10),
     ];
     this.load_list_element.next(this.listElement);
   }

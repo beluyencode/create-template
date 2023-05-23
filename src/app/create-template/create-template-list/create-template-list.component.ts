@@ -56,6 +56,8 @@ export class CreateTemplateListComponent implements OnInit {
   }
 
   deleteELe(ele: Template) {
+    console.log(123);
+
     this.createTemplateService.changeTemplate(TypeAction.DELETE, ele);
   }
 

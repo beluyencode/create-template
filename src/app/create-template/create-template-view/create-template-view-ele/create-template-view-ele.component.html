@@ -12,7 +12,7 @@
     'background-color': data.background,
     width: data.width ? data.width * scale  +'px' : 'auto',
     transform: 'rotate('+ data.rotate + 'deg'+')',
-    'border-radius': data.borderRadius + 'px',
+    'border-radius': data.borderRadius* scale  + 'px',
     'z-index': data.zIndex
   }" (click)="active($event)">
   <div class='view-ele-rev' [style]="{
@@ -61,7 +61,7 @@
       width: '100%',
       height: '100%'
     }" [ngStyle]="{
-      'border-radius': data.borderRadius + 'px'
+      'border-radius': data.borderRadius* scale  + 'px'
     }" alt="" *ngIf="data.url !== ''">
     <div class='view-img-empty' [ngStyle]="{
       'border-radius': data.borderRadius + 'px'
@@ -91,7 +91,7 @@
     width: data.width ? data.width * scale  +'px' : 'auto',
     height: data.height ? data.height * scale  +'px' : 'auto',
     transform: 'rotate('+ data.rotate + 'deg'+')',
-    'border-radius': data.borderRadius + 'px',
+    'border-radius': data.borderRadius* scale  + 'px',
     'background-color': data.background,
     'z-index': data.zIndex
   }" (click)="active($event)">
