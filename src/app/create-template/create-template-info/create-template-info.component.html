@@ -39,11 +39,11 @@
                 </div>
                 <div class='item-data'>
                     <ng-select [(ngModel)]="activeTemplate.type" [clearable]='false' class='custom-ngselect'>
-                        <ng-option *ngFor="let car of typeTemplate" [value]="car">{{car}}</ng-option>
+                        <ng-option *ngFor="let car of typeTemplateArray" [value]="car">{{car}}</ng-option>
                     </ng-select>
                 </div>
             </div>
-            <ng-container *ngIf="activeTemplate.type === typeTemplate[1]">
+            <ng-container *ngIf="activeTemplate.type === typeTemplateArray[1]">
                 <div class='item'>
                     <div class='item-title'>
                         Link
@@ -113,7 +113,7 @@
                     </div>
                 </div>
             </ng-container>
-            <ng-container *ngIf="activeTemplate.type === typeTemplate[0]">
+            <ng-container *ngIf="activeTemplate.type === typeTemplateArray[0]">
                 <div class='item'>
                     <div class='item-title'>
                         Nội dung
@@ -155,7 +155,7 @@
                     </div>
                     <div class='item-data'>
                         <input type="color" [(ngModel)]='activeTemplate.color'>
-                        <span class='item-data-input-color-title'>{{activeTemplate.color}}</span>
+                        <span class='item-data-input-color-title'>{{activeTemplate.color}} </span>
                     </div>
                 </div>
                 <div class='item'>
@@ -165,6 +165,7 @@
                     <div class='item-data'>
                         <input type="color" [(ngModel)]='activeTemplate.background'>
                         <span class='item-data-input-color-title'>{{activeTemplate.background}}</span>
+                        <span class='transparent' (click)="transparent()"><i class="fa-regular fa-square"></i></span>
                     </div>
                 </div>
                 <div class='item'>
@@ -211,7 +212,7 @@
                     </div>
                 </div>
             </ng-container>
-            <ng-container *ngIf="activeTemplate.type === typeTemplate[2]">
+            <ng-container *ngIf="activeTemplate.type === typeTemplateArray[2]">
                 <div class='item'>
                     <div class='item-title'>
                         Chiều rộng
@@ -235,6 +236,7 @@
                     <div class='item-data'>
                         <input type="color" [(ngModel)]='activeTemplate.background'>
                         <span class='item-data-input-color-title'>{{activeTemplate.background}}</span>
+                        <span class='transparent' (click)="transparent()"><i class="fa-regular fa-square"></i></span>
                     </div>
                 </div>
                 <div class='item'>
@@ -262,6 +264,98 @@
                         <input type="number" [(ngModel)]='activeTemplate.zIndex'>
                     </div>
                 </div>
+            </ng-container>
+            <ng-container *ngIf="activeTemplate.type === typeTemplateArray[3]">
+                <ng-container
+                    *ngIf="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].type === typeTemplate.TEXT">
+                    <div class='item'>
+                        <div class='item-title'>
+                            Chiều rộng
+                        </div>
+                        <div class='item-data'>
+                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.width'>
+                        </div>
+                    </div>
+                    <div class='item'>
+                        <div class='item-title'>
+                            Chiều dài
+                        </div>
+                        <div class='item-data'>
+                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.height'>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container
+                    *ngIf="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].type === typeTemplate.BACKGROUND">
+                    <div class='item'>
+                        <div class='item-title'>
+                            Chiều rộng
+                        </div>
+                        <div class='item-data'>
+                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.width'>
+                        </div>
+                    </div>
+                    <div class='item'>
+                        <div class='item-title'>
+                            Chiều dài
+                        </div>
+                        <div class='item-data'>
+                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.height'>
+                        </div>
+                    </div>
+                    <div class='item'>
+                        <div class='item-title'>
+                            Z
+                        </div>
+                        <div class='item-data'>
+                            <input type="number" [(ngModel)]='activeTemplate.checkInOptions.zIndex'>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container
+                    *ngIf="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].type === typeTemplate.IMAGE">
+                    <div class='item'>
+                        <div class='item-title'>
+                            Link
+                        </div>
+                        <div class='item-data'>
+                            <input type="text"
+                                [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].url'>
+                        </div>
+                    </div>
+                    <div class='item'>
+                        <div class='item-title'>
+                            Upload
+                        </div>
+                        <div class='item-data'>
+                            <input type="file" (change)='uploadImg($event)' accept="image/png, image/gif, image/jpeg">
+                        </div>
+                    </div>
+                    <div class='item'>
+                        <div class='item-title'>
+                            Chiều rộng
+                        </div>
+                        <div class='item-data'>
+                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.width'>
+                        </div>
+                    </div>
+                    <div class='item'>
+                        <div class='item-title'>
+                            Chiều dài
+                        </div>
+                        <div class='item-data'>
+                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.height'>
+                        </div>
+                    </div>
+                    <div class='item'>
+                        <div class='item-title'>
+                            Z
+                        </div>
+                        <div class='item-data'>
+                            <input type="number" [(ngModel)]='activeTemplate.checkInOptions.zIndex'>
+                        </div>
+                    </div>
+                </ng-container>
             </ng-container>
         </ng-container>
     </div>

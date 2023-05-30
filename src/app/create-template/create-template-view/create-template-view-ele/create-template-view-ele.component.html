@@ -112,3 +112,46 @@
       <div class="dotnet dotnet-bottom-left" *ngIf="edit" (mousedown)="changeSize($event)"></div>
     </div>
   </div>
+</div>
+
+<div class='view-ele' [style]="{
+  position: 'absolute',
+  cursor: 'pointer',
+ 'line-break': 'anywhere'
+}" #ele *ngIf="scale && data.type === typeTemplate.CHECK_IN" [ngStyle]="{
+    display: data.hidden ? 'none' : 'block',
+    top: data.y  + '%',
+    left: data.x  + '%',
+    width: data.width ? data.checkInOptions.width * scale  +'px' : 'auto',
+    height: data.height ? data.checkInOptions.height * scale  +'px' : 'auto',
+    transform: 'rotate('+ data.rotate + 'deg'+')',
+    'border-radius': data.borderRadius* scale  + 'px',
+    'background-color': data.background,
+    'z-index': data.zIndex
+  }" (click)="active($event)">
+  <div class='view-ele-rev' [style]="{
+    position: 'relative',
+    width: '100%',
+    'white-space': 'pre-line',
+    height: '100%'
+  }" (mousedown)="moveEle($event)">
+    <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
+    <div class='view-ele-ab' *ngIf="isSelect">
+      <div class='tag-check-in' *ngIf="edit">
+        <ng-select [(ngModel)]="data.checkInOptions.activeType" [clearable]='false' class='custom-ngselect'>
+          <ng-option *ngFor="let car of checkOption" [value]="car!.value">{{car!.label}}</ng-option>
+        </ng-select>
+      </div>
+      <div class='check-in-view'>
+        <app-create-template-view-ele-check [data]="data" [scale]="scale"></app-create-template-view-ele-check>
+      </div>
+      <!-- <div class="dotnet dotnet-top-left" (mousedown)="changeSize($event)"></div>
+      <div class="dotnet dotnet-top-right" (mousedown)="changeSize($event)"></div>
+      <div class="dotnet dotnet-bottom-right" (mousedown)="changeSize($event)"></div> -->
+      <!-- <div class="rotate" (mousedown)="rotate($event)" *ngIf="edit">
+        <i class="fa-solid fa-rotate-left"></i>
+      </div> -->
+      <div class="dotnet dotnet-bottom-left" *ngIf="edit" (mousedown)="changeSize($event)"></div>
+    </div>
+  </div>
+</div>

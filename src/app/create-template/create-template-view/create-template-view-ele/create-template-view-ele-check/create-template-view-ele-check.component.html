@@ -1,0 +1,70 @@
+<div class='view-ele' [style]="{
+    position: 'absolute',
+    cursor: 'pointer',
+   'line-break': 'anywhere'
+  }" #ele *ngIf="scale && data.checkInOptions[data.checkInOptions.activeType].type === typeTemplate.TEXT" [ngStyle]="{
+      color: data.color,
+      'font-size': data.fontSize * scale +'px',
+      'text-align': data.align,
+      'background-color': data.background,
+    }">
+  <div class='view-ele-rev' [style]="{
+      position: 'relative',
+      width: '100%',
+      'white-space': 'pre-line',
+      height: '100%'
+    }" [ngStyle]="{
+      padding: data.padding + 'px'
+    }">
+    {{data.content}}
+  </div>
+</div>
+
+<div class='view-ele' [style]="{
+    position: 'absolute',
+    cursor: 'pointer',
+   'line-break': 'anywhere'
+  }" #ele *ngIf="scale && data.checkInOptions[data.checkInOptions.activeType].type === typeTemplate.IMAGE" [ngStyle]="{
+      width: '100%',
+      height: '100%',
+      'border-radius': data.borderRadius + 'px',
+    }">
+  <div class='view-ele-rev' [style]="{
+      position: 'relative',
+      width: '100%',
+      'white-space': 'pre-line',
+      height: '100%'
+    }">
+    <img [src]="data.url" [style]="{
+        width: '100%',
+        height: '100%'
+      }" [ngStyle]="{
+        'border-radius': data.borderRadius* scale  + 'px'
+      }" alt="" *ngIf="data.url !== ''">
+    <div class='view-img-empty' [ngStyle]="{
+        'border-radius': data.borderRadius + 'px'
+      }" *ngIf="data.url === ''">
+    </div>
+  </div>
+</div>
+
+<div class='view-ele' [style]="{
+    position: 'absolute',
+    cursor: 'pointer',
+   'line-break': 'anywhere'
+  }" #ele *ngIf="scale && data.checkInOptions[data.checkInOptions.activeType].type === typeTemplate.BACKGROUND"
+  [ngStyle]="{
+    width: '100%',
+    height: '100%',
+      'border-radius': data.borderRadius* scale  + 'px',
+      'background-color': data.background,
+    }">
+  <div class='view-ele-rev' [style]="{
+      position: 'relative',
+      width: '100%',
+      'white-space': 'pre-line',
+      height: '100%'
+    }">
+
+  </div>
+</div>

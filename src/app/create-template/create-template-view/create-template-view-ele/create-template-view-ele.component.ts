@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { Template, TypeTemplate } from '../../create-template';
+import { Template, TypeTemplate, checkInState } from '../../create-template';
 import { CreateTemplateService } from '../../create-template.service';
 
 @Component({
@@ -16,6 +16,27 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
   activeTemplate: Template | null;
   isSelect = false;
   typeTemplate = TypeTemplate;
+  checkOption = Object.values(checkInState).map((ele: string) => {
+    switch (ele) {
+      case checkInState.ERROR:
+        return {
+          label: 'lỗi',
+          value: 'notFound'
+        }
+      case checkInState.CHECKED:
+        return {
+          label: 'đã check in',
+          value: 'checkedIn'
+        }
+      case checkInState.CHECKIN:
+        return {
+          label: 'check in',
+          value: 'checkIn'
+        }
+      default:
+        return null;
+    }
+  });
   prevSize = {
     x: 0,
     y: 0,
@@ -60,15 +81,20 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
       this.prevSize = {
         x: event.clientX,
         y: event.clientY,
-        width: this.data.width,
-        height: this.data.height
+        width: this.activeTemplate?.type !== TypeTemplate.CHECK_IN ? this.data.width : this.data.checkInOptions.width,
+        height: this.activeTemplate?.type !== TypeTemplate.CHECK_IN ? this.data.height : this.data.checkInOptions.height
       }
       this._listeners.push(
         this.renderer.listen(document, 'mousemove', (e) => {
           const dx = e.clientX - this.prevSize.x;
           const dy = e.clientY - this.prevSize.y;
-          this.data.width = this.prevSize.width + (Math.round((dx) * 100) / 100);
-          this.data.height = this.prevSize.height + (Math.round((dy) * 100) / 100);
+          if (this.activeTemplate?.type !== TypeTemplate.CHECK_IN) {
+            this.data.width = this.prevSize.width + (Math.round((dx) * 100) / 100);
+            this.data.height = this.prevSize.height + (Math.round((dy) * 100) / 100);
+          } else {
+            this.data.checkInOptions.width = this.prevSize.width + (Math.round((dx) * 100) / 100);
+            this.data.checkInOptions.height = this.prevSize.height + (Math.round((dy) * 100) / 100);
+          }
         })
       );
       this.cancelListenMouseUp();

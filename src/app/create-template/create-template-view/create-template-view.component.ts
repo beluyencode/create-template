@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { BackgroundTemplate, Template, TypeScreen } from '../create-template';
+import { Template, TypeScreen } from '../create-template';
 import { CreateTemplateService } from '../create-template.service';
 import html2canvas from 'html2canvas';
 import { ToastrService } from 'ngx-toastr';

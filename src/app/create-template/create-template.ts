@@ -16,7 +16,19 @@ export interface Template {
     rotate: number;
     padding: number;
     borderRadius: number;
-    zIndex: number
+    zIndex: number,
+    checkInOptions: CheckInOptions
+}
+
+export interface CheckInOptions {
+    width: number,
+    background: string,
+    height: number
+    notFound: any,
+    checkIn: any,
+    checkedIn: any,
+    zIndex: number,
+    activeType: checkInState
 }
 
 export class Template implements Template {
@@ -39,6 +51,43 @@ export class Template implements Template {
         this.borderRadius = 0
         this.url = '';
         this.zIndex = 0;
+        this.checkInOptions = {
+            zIndex: 0,
+            width: 100,
+            height: 100,
+            background: '',
+            activeType: checkInState.ERROR,
+            notFound: {
+                content: name,
+                color: '#fff',
+                align: TypeAlign.LEFT,
+                background: 'transparent',
+                url: '',
+                borderRadius: 0,
+                padding: 0,
+                type: TypeTemplate.IMAGE
+            },
+            checkedIn: {
+                content: name,
+                color: '#fff',
+                align: TypeAlign.LEFT,
+                background: 'transparent',
+                url: '',
+                borderRadius: 0,
+                padding: 0,
+                type: TypeTemplate.TEXT
+            },
+            checkIn: {
+                content: name,
+                color: '#fff',
+                align: TypeAlign.LEFT,
+                background: 'transparent',
+                url: '',
+                borderRadius: 0,
+                padding: 0,
+                type: TypeTemplate.BACKGROUND
+            }
+        }
     }
 
     clone() {
@@ -54,6 +103,12 @@ export class Template implements Template {
     }
 }
 
+export enum checkInState {
+    ERROR = 'notFound',
+    CHECKED = 'checkedIn',
+    CHECKIN = 'checkIn'
+}
+
 export function ObjectId(m = Math, d = Date, h = 16, s = (sELe: any) => m.floor(sELe).toString(h)) {
     return s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h));
 }
@@ -67,7 +122,7 @@ export interface BackgroundTemplate {
 export class BackgroundTemplate implements BackgroundTemplate {
     constructor() {
         this.name = 'background';
-        this.url = '';
+        this.url = 'https://images.pexels.com/photos/1235757/pexels-photo-1235757.jpeg?cs=srgb&dl=pexels-elias-tigiser-1235757.jpg&fm=jpg';
         this.scale = TypeScreen.PC
     }
 }
@@ -83,7 +138,8 @@ export const apiUrl = {
 export enum TypeTemplate {
     TEXT = 'text',
     IMAGE = 'img',
-    BACKGROUND = 'background'
+    BACKGROUND = 'background',
+    CHECK_IN = 'check in'
 }
 
 export enum TypeAction {

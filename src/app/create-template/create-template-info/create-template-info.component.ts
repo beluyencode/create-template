@@ -13,7 +13,9 @@ export class CreateTemplateInfoComponent implements OnInit {
   isTemplate = false;
   typeAlign: Array<string> = Object.values(TypeAlign);
   typeScreen = Object.values(TypeScreen);
-  typeTemplate = Object.values(TypeTemplate);
+  typeTemplateArray = Object.values(TypeTemplate);
+  typeTemplate = TypeTemplate;
+
   constructor(
     public createTemplateService: CreateTemplateService,
     private toastr: ToastrService
@@ -66,5 +68,9 @@ export class CreateTemplateInfoComponent implements OnInit {
         });
       }
     }
+  }
+
+  transparent() {
+    this.activeTemplate.background = 'transparent'
   }
 }
