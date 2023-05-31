@@ -65,4 +65,8 @@ export class CreateTemplateListComponent implements OnInit {
     this.createTemplateService.addTemplate();
   }
 
+  viewMode() {
+
+  }
+
 }

@@ -4,7 +4,10 @@
         <span>
             Background
         </span>
-        <span (click)="fullScreen($event)"><i class="fa-solid fa-expand"></i></span>
+        <div>
+            <i class="fa-regular fa-eye" (click)="viewMode()"></i>
+            <span (click)="fullScreen($event)"><i class="fa-solid fa-expand"></i></span>
+        </div>
     </div>
     <div class='line'></div>
     <div class='list-view'>

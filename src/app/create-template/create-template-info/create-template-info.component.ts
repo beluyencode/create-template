@@ -70,7 +70,8 @@ export class CreateTemplateInfoComponent implements OnInit {
     }
   }
 
-  transparent() {
-    this.activeTemplate.background = 'transparent'
+  addMoreInfo() {
+
   }
+
 }

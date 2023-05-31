@@ -165,7 +165,8 @@
                     <div class='item-data'>
                         <input type="color" [(ngModel)]='activeTemplate.background'>
                         <span class='item-data-input-color-title'>{{activeTemplate.background}}</span>
-                        <span class='transparent' (click)="transparent()"><i class="fa-regular fa-square"></i></span>
+                        <span class='transparent' (click)="activeTemplate.background = 'transparent'"><i
+                                class="fa-regular fa-square"></i></span>
                     </div>
                 </div>
                 <div class='item'>
@@ -236,7 +237,8 @@
                     <div class='item-data'>
                         <input type="color" [(ngModel)]='activeTemplate.background'>
                         <span class='item-data-input-color-title'>{{activeTemplate.background}}</span>
-                        <span class='transparent' (click)="transparent()"><i class="fa-regular fa-square"></i></span>
+                        <span class='transparent' (click)="activeTemplate.background = 'transparent'"><i
+                                class="fa-regular fa-square"></i></span>
                     </div>
                 </div>
                 <div class='item'>
@@ -266,96 +268,226 @@
                 </div>
             </ng-container>
             <ng-container *ngIf="activeTemplate.type === typeTemplateArray[3]">
-                <ng-container
-                    *ngIf="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].type === typeTemplate.TEXT">
-                    <div class='item'>
-                        <div class='item-title'>
-                            Chiều rộng
+                <div class='item'>
+                    <div class='item-title'>
+                        Màu nền
+                    </div>
+                    <div class='item-data'>
+                        <input type="color"
+                            [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].background'>
+                        <span
+                            class='item-data-input-color-title'>{{activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].background}}</span>
+                        <span class='transparent'
+                            (click)="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].background = 'transparent'"><i
+                                class="fa-regular fa-square"></i></span>
+                    </div>
+                </div>
+                <!-- <div class='item'>
+                    <div class='item-title'>
+                        Padding
+                    </div>
+                    <div class='item-data'>
+                        <input type="number"
+                            [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.padding'>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Chiều rộng nội dung (%)
+                    </div>
+                    <div class='item-data'>
+                        <input type="number" min='0' max='100'
+                            [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.width'>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Tỉ lệ độ rộng của nội dung
+                    </div>
+                    <div class='item-data'>
+                        <input type="number" min='0' max='100'
+                            [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.scaleContentVSTitle'>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Tỉ lệ độ rộng của tiêu đề
+                    </div>
+                    <div class='item-data'>
+                        <input type="number" min='0' max='100'
+                            [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.scaleTitleVsContent'>
+                    </div>
+                </div> -->
+                <div class='item'>
+                    <div class='item-title'>
+                        Bên trái
+                    </div>
+                    <div class='item-data item-data-col'>
+                        <div class='groud-item'>
+                            <p>
+                                Ảnh <i class="fa-regular"
+                                    [ngClass]="{'fa-eye': !activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.img.hidden, 'fa-eye-slash' : activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.img.hidden}"
+                                    (click)="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.img.hidden = !activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.img.hidden"></i>
+                            </p>
+                            <div class='item-title'>
+                                Link
+                            </div>
+                            <div class='item-data'>
+                                <input type="text"
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.img.url'>
+                            </div>
+                            <div class='item-title'>
+                                Bo góc ảnh
+                            </div>
+                            <div class='item-data'>
+                                <input type="number" min='0' max='100'
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.img.borderRadius'>
+                            </div>
+                            <div class='item-title'>
+                                Độ rộng
+                            </div>
+                            <div class='item-data'>
+                                <input type="number" min='0' max='100'
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.img.width'>
+                            </div>
+                            <div class='item-title'>
+                                Độ dài
+                            </div>
+                            <div class='item-data'>
+                                <input type="number" min='0' max='100'
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.img.height'>
+                            </div>
                         </div>
-                        <div class='item-data'>
-                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.width'>
+                        <div class='groud-item'>
+                            <p>
+                                Tiêu đề<i class="fa-regular"
+                                    [ngClass]="{'fa-eye': !activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.title.hidden, 'fa-eye-slash' : activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.title.hidden}"
+                                    (click)="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.title.hidden = !activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.title.hidden"></i>
+                            </p>
+                            <div class='item-title'>
+                                Nội dung
+                            </div>
+                            <div class='item-data'>
+                                <textarea name="" id="" cols="30" rows="3"
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.title.content'></textarea>
+                            </div>
+                            <div class='item-title'>
+                                Màu
+                            </div>
+                            <div class='item-data'>
+                                <input type='color'
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.title.color'>
+                                <span class='item-data-input-color-title'>
+                                    {{activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.title.color}}
+                                </span>
+                            </div>
+                            <div class='item-title'>
+                                Cỡ chữ
+                            </div>
+                            <div class='item-data'>
+                                <input type="number"
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].left.title.fontSize'>
+                            </div>
                         </div>
                     </div>
-                    <div class='item'>
-                        <div class='item-title'>
-                            Chiều dài
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        Bên phải
+                    </div>
+                    <div class='item-title'>
+                        padding
+                    </div>
+                    <div class='item-data'>
+                        <input type="number"
+                            [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.padding'>
+                    </div>
+                    <div class='item-data item-data-col'>
+                        <div class='groud-item'>
+                            <p>
+                                Tiêu đề <i class="fa-regular"
+                                    [ngClass]="{'fa-eye': !activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.title.hidden, 'fa-eye-slash' : activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.title.hidden}"
+                                    (click)="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.title.hidden = !activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.title.hidden"></i>
+                            </p>
+                            <div class='item-title'>
+                                Nội dung
+                            </div>
+                            <div class='item-data'>
+                                <textarea name="" id="" cols="30" rows="3"
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.title.content'></textarea>
+                            </div>
+                            <div class='item-title'>
+                                Màu
+                            </div>
+                            <div class='item-data'>
+                                <input type='color'
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.title.color'>
+                                <span class='item-data-input-color-title'>
+                                    {{activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.title.color}}
+                                </span>
+                            </div>
+                            <div class='item-title'>
+                                Cỡ chữ
+                            </div>
+                            <div class='item-data'>
+                                <input type="number"
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.title.fontSize'>
+                            </div>
                         </div>
-                        <div class='item-data'>
-                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.height'>
+                        <div class='groud-item'>
+                            <p>
+                                Thông tin check in <i class="fa-regular"
+                                    [ngClass]="{'fa-eye': !activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.hidden, 'fa-eye-slash' : activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.hidden}"
+                                    (click)="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.hidden = !activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.hidden"></i>
+                            </p>
+                            <div class='item-title'>
+                                Độ rộng tiêu đề
+                            </div>
+                            <div class='item-data'>
+                                <input type="number"
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.scaleTitleVsContent'>
+                            </div>
+                            <div class='item-title'>
+                                độ rộng nội dung
+                            </div>
+                            <div class='item-data'>
+                                <input type="number"
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.scaleContentVSTitle'>
+                            </div>
+                            <div class='item-title'>
+                                padding
+                            </div>
+                            <div class='item-data'>
+                                <input type="number"
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.padding'>
+                            </div>
+                            <div class='groud-item'>
+                                <div class='item-title'>
+                                    Thông tin check in
+                                </div>
+                                <div class='groud-item'>
+                                    <p>
+                                        Thông tin 1 <i class="fa-regular"
+                                            [ngClass]="{'fa-eye': !activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.hidden, 'fa-eye-slash' : activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.hidden}"
+                                            (click)="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.hidden = !activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.hidden"></i>
+                                    </p>
+                                    <div class='item-title'>
+                                        Độ rộng tiêu đề
+                                    </div>
+                                    <div class='item-data'>
+                                        <input type="number"
+                                            [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].right.content.scaleTitleVsContent'>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button (click)="addMoreInfo()">
+                                        thêm thông tin
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </ng-container>
-                <ng-container
-                    *ngIf="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].type === typeTemplate.BACKGROUND">
-                    <div class='item'>
-                        <div class='item-title'>
-                            Chiều rộng
-                        </div>
-                        <div class='item-data'>
-                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.width'>
-                        </div>
-                    </div>
-                    <div class='item'>
-                        <div class='item-title'>
-                            Chiều dài
-                        </div>
-                        <div class='item-data'>
-                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.height'>
-                        </div>
-                    </div>
-                    <div class='item'>
-                        <div class='item-title'>
-                            Z
-                        </div>
-                        <div class='item-data'>
-                            <input type="number" [(ngModel)]='activeTemplate.checkInOptions.zIndex'>
-                        </div>
-                    </div>
-                </ng-container>
-                <ng-container
-                    *ngIf="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].type === typeTemplate.IMAGE">
-                    <div class='item'>
-                        <div class='item-title'>
-                            Link
-                        </div>
-                        <div class='item-data'>
-                            <input type="text"
-                                [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].url'>
-                        </div>
-                    </div>
-                    <div class='item'>
-                        <div class='item-title'>
-                            Upload
-                        </div>
-                        <div class='item-data'>
-                            <input type="file" (change)='uploadImg($event)' accept="image/png, image/gif, image/jpeg">
-                        </div>
-                    </div>
-                    <div class='item'>
-                        <div class='item-title'>
-                            Chiều rộng
-                        </div>
-                        <div class='item-data'>
-                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.width'>
-                        </div>
-                    </div>
-                    <div class='item'>
-                        <div class='item-title'>
-                            Chiều dài
-                        </div>
-                        <div class='item-data'>
-                            <input type="number" min='0' [(ngModel)]='activeTemplate.checkInOptions.height'>
-                        </div>
-                    </div>
-                    <div class='item'>
-                        <div class='item-title'>
-                            Z
-                        </div>
-                        <div class='item-data'>
-                            <input type="number" [(ngModel)]='activeTemplate.checkInOptions.zIndex'>
-                        </div>
-                    </div>
-                </ng-container>
+                </div>
             </ng-container>
         </ng-container>
     </div>

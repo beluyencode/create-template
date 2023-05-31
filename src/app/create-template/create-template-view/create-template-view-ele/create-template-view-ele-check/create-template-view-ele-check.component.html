@@ -1,70 +1,91 @@
-<div class='view-ele' [style]="{
-    position: 'absolute',
-    cursor: 'pointer',
-   'line-break': 'anywhere'
-  }" #ele *ngIf="scale && data.checkInOptions[data.checkInOptions.activeType].type === typeTemplate.TEXT" [ngStyle]="{
-      color: data.color,
-      'font-size': data.fontSize * scale +'px',
-      'text-align': data.align,
-      'background-color': data.background,
+<div class='check-in'>
+    <div class='check-in-img' [ngStyle]="{
+        width:'35%',
+        height: '100%',
+        'background-color': data.checkInOptions[data.checkInOptions.activeType].background,
+        'border-top-left-radius': 12*scale +'px',
+        'border-bottom-left-radius': 12*scale +'px',
+        'border-right': 3 * scale +'px dashed'
     }">
-  <div class='view-ele-rev' [style]="{
-      position: 'relative',
-      width: '100%',
-      'white-space': 'pre-line',
-      height: '100%'
-    }" [ngStyle]="{
-      padding: data.padding + 'px'
-    }">
-    {{data.content}}
-  </div>
-</div>
-
-<div class='view-ele' [style]="{
-    position: 'absolute',
-    cursor: 'pointer',
-   'line-break': 'anywhere'
-  }" #ele *ngIf="scale && data.checkInOptions[data.checkInOptions.activeType].type === typeTemplate.IMAGE" [ngStyle]="{
-      width: '100%',
-      height: '100%',
-      'border-radius': data.borderRadius + 'px',
-    }">
-  <div class='view-ele-rev' [style]="{
-      position: 'relative',
-      width: '100%',
-      'white-space': 'pre-line',
-      height: '100%'
-    }">
-    <img [src]="data.url" [style]="{
-        width: '100%',
-        height: '100%'
-      }" [ngStyle]="{
-        'border-radius': data.borderRadius* scale  + 'px'
-      }" alt="" *ngIf="data.url !== ''">
-    <div class='view-img-empty' [ngStyle]="{
-        'border-radius': data.borderRadius + 'px'
-      }" *ngIf="data.url === ''">
+        <img [src]="data.checkInOptions[data.checkInOptions.activeType].left.img.url" alt="" [ngStyle]="{
+            width: data.checkInOptions[data.checkInOptions.activeType].left.img.width * scale + 'px',
+            height: data.checkInOptions[data.checkInOptions.activeType].left.img.height * scale + 'px',
+            'margin-bottom': 6 * scale + 'px',
+            display: data.checkInOptions[data.checkInOptions.activeType].left.img.hidden ? 'none':'block'
+        }">
+        <span class='title-check-in-img' [ngStyle]="{
+            color: data.checkInOptions[data.checkInOptions.activeType].left.title.color,
+            'font-weight': 700,
+            'font-size': data.checkInOptions[data.checkInOptions.activeType].left.title.fontSize * scale + 'px',
+            'margin-bottom': 6 * scale + 'px',
+            display: data.checkInOptions[data.checkInOptions.activeType].left.title.hidden ? 'none':'block'
+        }">
+            {{data.checkInOptions[data.checkInOptions.activeType].left.title.content}}
+        </span>
+        <span class='title-check-in-img-sub' [ngStyle]="{
+            color: 'black',
+            'font-size': data.checkInOptions[data.checkInOptions.activeType].left.time.fontSize * scale + 'px',
+            'font-weight': 600
+        }">
+            {{data.checkInOptions[data.checkInOptions.activeType].left.time.content}} 8:10:23 25/9/2023
+        </span>
     </div>
-  </div>
-</div>
-
-<div class='view-ele' [style]="{
-    position: 'absolute',
-    cursor: 'pointer',
-   'line-break': 'anywhere'
-  }" #ele *ngIf="scale && data.checkInOptions[data.checkInOptions.activeType].type === typeTemplate.BACKGROUND"
-  [ngStyle]="{
-    width: '100%',
-    height: '100%',
-      'border-radius': data.borderRadius* scale  + 'px',
-      'background-color': data.background,
+    <div class='check-in-content' [ngStyle]="{
+        width:'65%',
+        height: '100%',
+        'background-color': data.checkInOptions[data.checkInOptions.activeType].background,
+        'border-top-right-radius': 12*scale +'px',
+        'border-bottom-right-radius': 12*scale +'px'
     }">
-  <div class='view-ele-rev' [style]="{
-      position: 'relative',
-      width: '100%',
-      'white-space': 'pre-line',
-      height: '100%'
-    }">
+        <div [ngStyle]="{
+            padding: data.checkInOptions[data.checkInOptions.activeType].right.padding * scale + 'px',
+            'text-align':'center',
+            'font-weight': 600,
+            'height': 'calc(100% - ' + data.checkInOptions[data.checkInOptions.activeType].right.padding * 2 * scale + 'px)',
+            'flex-direction': 'column',
+            'align-items': 'center',
+            'justify-content': 'center',
+            display: 'flex'
+        }">
+            <p [ngStyle]="{
+                color: data.checkInOptions[data.checkInOptions.activeType].right.title.color,
+                'font-weight': 700,
+                'margin-bottom': 6 * scale + 'px',
+                'margin-top': 6 * scale + 'px',
+                'line-break':'loose',
+                display: data.checkInOptions[data.checkInOptions.activeType].right.title.hidden ? 'none':'block',
+                'font-size' : data.checkInOptions[data.checkInOptions.activeType].right.title.fontSize * scale +'px'
+            }">
+                {{data.checkInOptions[data.checkInOptions.activeType].right.title.content}}
+            </p>
+            <div class='content-guest-div' *ngIf="!data.checkInOptions[data.checkInOptions.activeType].right.hidden"
+                [ngStyle]="{
+                'line-break':'loose',
+                width: data.checkInOptions[data.checkInOptions.activeType].right.width +'%',
+                display: data.checkInOptions[data.checkInOptions.activeType].right.content.hidden ? 'none':'block',
+                padding: data.checkInOptions[data.checkInOptions.activeType].right.content.padding * scale + 'px',
+            }">
+                <div class='content-guest'
+                    *ngFor="let item of data.checkInOptions[data.checkInOptions.activeType].right.content.listRow"
+                    [ngStyle]="{
+                    'margin-bottom': 5 * scale + 'px',
+                    'margin-top': 5 * scale + 'px',
+                    display:'flex',
+                    'font-size': 10 *scale +'px'
+                }">
+                    <div [ngStyle]="{
+                        width: data.checkInOptions[data.checkInOptions.activeType].right.content.scaleTitleVsContent + '%',
+                        'font-size': item.fontSizeContent *scale +'px',
+                        color: item.colorContent
+                    }">{{item.content}}</div>
+                    <div [ngStyle]="{
+                        width: data.checkInOptions[data.checkInOptions.activeType].right.content.scaleContentVSTitle  + '%',
+                        'font-size': item.fontSizeValue *scale +'px',
+                        color:item.colorValue
+                    }">{{item.value}}</div>
+                </div>
 
-  </div>
+            </div>
+        </div>
+    </div>
 </div>

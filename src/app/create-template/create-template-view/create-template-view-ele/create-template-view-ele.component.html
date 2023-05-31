@@ -135,15 +135,13 @@
     'white-space': 'pre-line',
     height: '100%'
   }" (mousedown)="moveEle($event)">
+    <app-create-template-view-ele-check [data]="data" [scale]="scale"></app-create-template-view-ele-check>
     <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
     <div class='view-ele-ab' *ngIf="isSelect">
       <div class='tag-check-in' *ngIf="edit">
         <ng-select [(ngModel)]="data.checkInOptions.activeType" [clearable]='false' class='custom-ngselect'>
           <ng-option *ngFor="let car of checkOption" [value]="car!.value">{{car!.label}}</ng-option>
         </ng-select>
-      </div>
-      <div class='check-in-view'>
-        <app-create-template-view-ele-check [data]="data" [scale]="scale"></app-create-template-view-ele-check>
       </div>
       <!-- <div class="dotnet dotnet-top-left" (mousedown)="changeSize($event)"></div>
       <div class="dotnet dotnet-top-right" (mousedown)="changeSize($event)"></div>
