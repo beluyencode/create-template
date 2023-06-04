@@ -54,6 +54,9 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
         this.listTemplate = res;
       }
     });
+    this.createTemplateService.loading.asObservable().subscribe((res: boolean) => {
+      this.loading = res;
+    })
     this.createTemplateService.listen_save_to_img().subscribe((res: boolean) => {
       this.edit = !res;
       if (res) {
@@ -115,7 +118,7 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
             this.changeScale();
             this.loading = false;
             this.createTemplateService.save_config.next(false);
-            this.toastr.success('Upload ảnh thành công');
+            this.toastr.success('Lưu thành công');
 
           })
         });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BackgroundTemplate, Template, TypeAction, TypeAlign, TypeScreen, TypeTemplate, apiUrl } from '../create-template';
+import { BackgroundTemplate, ObjectId, Template, TypeAction, TypeAlign, TypeScreen, TypeTemplate, apiUrl } from '../create-template';
 import { CreateTemplateService } from '../create-template.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -14,6 +14,7 @@ export class CreateTemplateInfoComponent implements OnInit {
   typeAlign: Array<string> = Object.values(TypeAlign);
   typeScreen = Object.values(TypeScreen);
   typeTemplateArray = Object.values(TypeTemplate);
+  typeTemplateArrayCheckIn = Object.values(TypeTemplate).filter(ele => ele !== TypeTemplate.CHECK_IN);
   typeTemplate = TypeTemplate;
 
   constructor(
@@ -41,7 +42,7 @@ export class CreateTemplateInfoComponent implements OnInit {
     this.createTemplateService.changeScaleScreen.next(value);
   }
 
-  uploadImg(event: any) {
+  uploadImg(event: any, isCheckIn?: any) {
     const file = event.target.files[0];
     const fileType = file['type'];
     const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
@@ -53,25 +54,45 @@ export class CreateTemplateInfoComponent implements OnInit {
       } else {
         const form = new FormData();
         form.append('file', file);
+        this.createTemplateService.loading.next(true);
         this.createTemplateService.uploadImg(form).subscribe((res: any) => {
           event.target.value = '';
           if (res?.code === 200) {
             this.toastr.success('Upload ảnh thành công');
-            if (this.isTemplate) {
-              this.activeTemplate.url = apiUrl.origin + apiUrl.static + res.data.path;
+            if (isCheckIn) {
+              this.activeTemplate.checkInOptions[this.activeTemplate.checkInOptions.activeType].url = apiUrl.origin + apiUrl.static + res.data.path;
             } else {
-              this.createTemplateService.background.url = apiUrl.origin + apiUrl.static + res.data.path;
+              if (this.isTemplate) {
+                this.activeTemplate.url = apiUrl.origin + apiUrl.static + res.data.path;
+              } else {
+                this.createTemplateService.background.url = apiUrl.origin + apiUrl.static + res.data.path;
+              }
             }
           } else {
             this.toastr.error('Upload ảnh không thành công');
           }
+          this.createTemplateService.loading.next(false);
         });
       }
     }
   }
 
   addMoreInfo() {
+    this.activeTemplate.checkInOptions[this.activeTemplate.checkInOptions.activeType].right.content.listRow.push({
+      fontSizeContent: 10,
+      fontSizeValue: 10,
+      colorContent: 'black',
+      colorValue: 'black',
+      content: 'Họ và tên',
+      value: 'Phạm Việt Long',
+      hidden: false,
+      id: ObjectId()
+    })
+  }
 
+  removeInfo(info: any) {
+    this.activeTemplate.checkInOptions[this.activeTemplate.checkInOptions.activeType].right.content.listRow =
+      this.activeTemplate.checkInOptions[this.activeTemplate.checkInOptions.activeType].right.content.listRow.filter((item: any) => item.id !== info.id);
   }
 
 }

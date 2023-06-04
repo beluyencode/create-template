@@ -22,6 +22,7 @@ export class CreateTemplateService {
   changeScaleScreen;
   save_config;
   idTemplate;
+  loading;
 
   constructor(
     private http: HttpClient
@@ -33,9 +34,10 @@ export class CreateTemplateService {
     this.changeScaleScreen = new BehaviorSubject<any>(null);
     this.save_config = new BehaviorSubject<any>(null);
     this.idTemplate = new BehaviorSubject<any>('');
-    // this.listElement = [...Array(5)].map((ele: any, index: number) => {
-    //   return new Template('element' + index);
-    // });
+    this.loading = new BehaviorSubject<any>(false);
+    this.listElement = [...Array(1)].map((ele: any, index: number) => {
+      return new Template('element' + index, 12 + index);
+    });
     this.load_list_element = new BehaviorSubject<any>(this.listElement);
   }
 

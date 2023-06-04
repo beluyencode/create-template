@@ -119,14 +119,13 @@
   cursor: 'pointer',
  'line-break': 'anywhere'
 }" #ele *ngIf="scale && data.type === typeTemplate.CHECK_IN" [ngStyle]="{
-    display: data.hidden ? 'none' : 'block',
+    display: data.checkInOptions[data.checkInOptions.activeType].hidden ? 'none' : 'block',
     top: data.y  + '%',
     left: data.x  + '%',
-    width: data.width ? data.checkInOptions.width * scale  +'px' : 'auto',
-    height: data.height ? data.checkInOptions.height * scale  +'px' : 'auto',
-    transform: 'rotate('+ data.rotate + 'deg'+')',
-    'border-radius': data.borderRadius* scale  + 'px',
-    'background-color': data.background,
+    width: data.checkInOptions[data.checkInOptions.activeType].width ? data.checkInOptions[data.checkInOptions.activeType].width * scale  +'px' : 'auto',
+    height: data.checkInOptions[data.checkInOptions.activeType].height ? data.checkInOptions[data.checkInOptions.activeType].height * scale  +'px' : 'auto',
+    'border-radius': data.checkInOptions[data.checkInOptions.activeType].borderRadius* scale  + 'px',
+    'background-color': data.checkInOptions[data.checkInOptions.activeType].background,
     'z-index': data.zIndex
   }" (click)="active($event)">
   <div class='view-ele-rev' [style]="{
@@ -135,7 +134,6 @@
     'white-space': 'pre-line',
     height: '100%'
   }" (mousedown)="moveEle($event)">
-    <app-create-template-view-ele-check [data]="data" [scale]="scale"></app-create-template-view-ele-check>
     <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
     <div class='view-ele-ab' *ngIf="isSelect">
       <div class='tag-check-in' *ngIf="edit">

@@ -81,8 +81,8 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
       this.prevSize = {
         x: event.clientX,
         y: event.clientY,
-        width: this.activeTemplate?.type !== TypeTemplate.CHECK_IN ? this.data.width : this.data.checkInOptions.width,
-        height: this.activeTemplate?.type !== TypeTemplate.CHECK_IN ? this.data.height : this.data.checkInOptions.height
+        width: this.activeTemplate?.type !== TypeTemplate.CHECK_IN ? this.data.width : this.data.checkInOptions[this.data.checkInOptions.activeType].width,
+        height: this.activeTemplate?.type !== TypeTemplate.CHECK_IN ? this.data.height : this.data.checkInOptions[this.data.checkInOptions.activeType].height
       }
       this._listeners.push(
         this.renderer.listen(document, 'mousemove', (e) => {
@@ -92,8 +92,8 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
             this.data.width = this.prevSize.width + (Math.round((dx) * 100) / 100);
             this.data.height = this.prevSize.height + (Math.round((dy) * 100) / 100);
           } else {
-            this.data.checkInOptions.width = this.prevSize.width + (Math.round((dx) * 100) / 100);
-            this.data.checkInOptions.height = this.prevSize.height + (Math.round((dy) * 100) / 100);
+            this.data.checkInOptions[this.data.checkInOptions.activeType].width = this.prevSize.width + (Math.round((dx) * 100) / 100);
+            this.data.checkInOptions[this.data.checkInOptions.activeType].height = this.prevSize.height + (Math.round((dy) * 100) / 100);
           }
         })
       );

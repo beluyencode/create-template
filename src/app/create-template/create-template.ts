@@ -17,7 +17,62 @@ export interface Template {
     padding: number;
     borderRadius: number;
     zIndex: number,
-    checkInOptions: CheckInOptions
+    checkInOptions: TemplateCheckIn
+}
+
+export interface TemplateCheckIn {
+    activeType: checkInState,
+    notFound: {
+        content: string;
+        name: string;
+        color: string;
+        hidden: boolean;
+        type: TypeTemplate,
+        url?: string;
+        fontSize: number,
+        background: string,
+        rotate: number;
+        padding: number;
+        borderRadius: number;
+        zIndex: number,
+        width: number;
+        height: number;
+        align: string;
+    },
+    checkedIn: {
+        content: string;
+        name: string;
+        color: string;
+        hidden: boolean;
+        type: TypeTemplate,
+        url?: string;
+        fontSize: number,
+        background: string,
+        rotate: number;
+        padding: number;
+        borderRadius: number;
+        zIndex: number,
+        width: number;
+        height: number;
+        align: string;
+    },
+    checkIn: {
+        content: string;
+        name: string;
+        color: string;
+        hidden: boolean;
+        type: TypeTemplate,
+        url?: string;
+        fontSize: number,
+        background: string,
+        rotate: number;
+        padding: number;
+        borderRadius: number;
+        zIndex: number;
+        width: number;
+        height: number;
+        align: string;
+    }
 }
 
 export interface CheckInOptions {
@@ -52,151 +107,57 @@ export class Template implements Template {
         this.url = '';
         this.zIndex = 0;
         this.checkInOptions = {
-            zIndex: 0,
-            width: 360,
-            height: 140,
-            background: '',
             activeType: checkInState.ERROR,
             notFound: {
-                background: 'white',
-                left: {
-                    hidden: false,
-                    img: {
-                        url: 'http://localhost:4200/assets/error.svg',
-                        borderRadius: 0,
-                        width: 60,
-                        height: 60
-                    },
-                    title: {
-                        fontSize: 12,
-                        color: '#d75a4a',
-                        content: 'KHÔNG CÓ \n DỮ LIỆU'
-                    },
-                    time: {
-                        fontSize: 8,
-                        color: 'black',
-                        content: 'Time :'
-                    }
-                },
-                right: {
-                    padding: 15,
-                    width: 100,
-                    title: {
-                        fontSize: 11,
-                        color: '#d75a4a',
-                        content: 'KHÔNG CÓ DỮ LIỆU'
-                    },
-                    content: {
-                        scaleTitleVsContent: 30,
-                        scaleContentVSTitle: 70,
-                        padding: 15,
-                        listRow: [
-                            {
-                                fontSizeContent: 10,
-                                fontSizeValue: 10,
-                                colorContent: 'black',
-                                colorValue: 'black',
-                                content: 'Họ và tên',
-                                value: 'Phạm Việt Long'
-                            }
-                        ]
-                    },
-                    hidden: true
-                }
+                align: 'left',
+                content: 'not found',
+                name: '',
+                color: '#ffffff',
+                hidden: false,
+                type: TypeTemplate.TEXT,
+                url: '',
+                fontSize: 14,
+                background: 'transparent',
+                rotate: 0,
+                padding: 0,
+                borderRadius: 0,
+                zIndex: 0,
+                width: 100,
+                height: 100
             },
             checkedIn: {
-                background: 'white',
-                left: {
-                    hidden: false,
-                    img: {
-                        url: 'http://localhost:4200/assets/info.svg',
-                        borderRadius: 0,
-                        width: 60,
-                        height: 60
-                    },
-                    title: {
-                        fontSize: 12,
-                        color: '#48a0dc',
-                        content: 'ĐÃ ĐƯỢC \n CHECK IN'
-                    },
-                    time: {
-                        fontSize: 8,
-                        color: 'black',
-                        content: 'Time :'
-                    },
-                },
-                right: {
-                    padding: 15,
-                    width: 100,
-                    hidden: false,
-                    title: {
-                        fontSize: 11,
-                        color: '#48a0dc',
-                        content: 'THÔNG TIN KHÁCH HÀNG'
-                    },
-                    content: {
-                        scaleTitleVsContent: 30,
-                        scaleContentVSTitle: 70,
-                        listRow: [
-                            {
-                                fontSizeContent: 10,
-                                fontSizeValue: 10,
-                                colorContent: 'black',
-                                colorValue: 'black',
-                                content: 'Họ và tên',
-                                value: 'Phạm Việt Long',
-                            }
-                        ]
-                    },
-                }
-
+                align: 'left',
+                content: 'not found',
+                name: '',
+                color: '#ffffff',
+                hidden: false,
+                type: TypeTemplate.TEXT,
+                url: '',
+                fontSize: 14,
+                background: 'transparent',
+                rotate: 0,
+                padding: 0,
+                borderRadius: 0,
+                zIndex: 0,
+                width: 100,
+                height: 100
             },
             checkIn: {
-                background: 'white',
-                left: {
-                    hidden: false,
-                    img: {
-                        url: 'http://localhost:4200/assets/success.svg',
-                        borderRadius: 0,
-                        width: 60,
-                        height: 60
-                    },
-                    title: {
-                        fontSize: 12,
-                        color: '#25ae88',
-                        content: 'CHECK IN \n THÀNH CÔNG'
-                    },
-                    time: {
-                        fontSize: 8,
-                        color: 'black',
-                        content: 'Time : '
-                    }
-                },
-                right: {
-                    hidden: false,
-                    title: {
-                        fontSize: 11,
-                        color: '#25ae88',
-                        content: 'THÔNG TIN KHÁCH HÀNG'
-                    },
-                    content: {
-                        scaleTitleVsContent: 30,
-                        scaleContentVSTitle: 70,
-                        listRow: [
-                            {
-                                fontSizeContent: 10,
-                                fontSizeValue: 10,
-                                colorContent: 'black',
-                                colorValue: 'black',
-                                content: 'Họ và tên',
-                                value: 'Phạm Việt Long'
-                            }
-                        ]
-                    },
-                    padding: 15,
-                    width: 100,
-
-                }
+                align: 'left',
+                content: 'not found',
+                name: '',
+                color: '#ffffff',
+                hidden: false,
+                type: TypeTemplate.TEXT,
+                url: '',
+                fontSize: 14,
+                background: 'transparent',
+                rotate: 0,
+                padding: 0,
+                borderRadius: 0,
+                zIndex: 0,
+                width: 100,
+                height: 100
             }
         }
     }

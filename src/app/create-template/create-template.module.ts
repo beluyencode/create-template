@@ -10,7 +10,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CreateTemplateViewEleCheckComponent } from './create-template-view/create-template-view-ele/create-template-view-ele-check/create-template-view-ele-check.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +18,6 @@ import { CreateTemplateViewEleCheckComponent } from './create-template-view/crea
     CreateTemplateListComponent,
     CreateTemplateViewComponent,
     CreateTemplateViewEleComponent,
-    CreateTemplateViewEleCheckComponent,
   ],
   imports: [
     CommonModule,
