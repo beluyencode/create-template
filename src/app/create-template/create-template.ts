@@ -20,6 +20,14 @@ export interface Template {
     checkInOptions: TemplateCheckIn
 }
 
+export interface TemplateGroup {
+    id: string
+    data: Array<Template>,
+    name: string
+    x: number,
+    y: number
+}
+
 export interface TemplateCheckIn {
     activeType: checkInState,
     notFound: {
@@ -84,6 +92,28 @@ export interface CheckInOptions {
     checkedIn: any,
     zIndex: number,
     activeType: checkInState
+}
+
+export class TemplateGroup implements TemplateGroup {
+    constructor(name: string) {
+        this.id = ObjectId();
+        this.name = name;
+        this.data = [];
+        this.x = 0;
+        this.y = 0
+    }
+
+    clone() {
+        const cloned = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+        Object.setPrototypeOf(cloned, this.constructor.prototype);
+        return cloned;
+    }
+
+    convertType(template: any) {
+        const cloned = Object.assign(this, template);
+        Object.setPrototypeOf(cloned, this.constructor.prototype);
+        return cloned;
+    }
 }
 
 export class Template implements Template {

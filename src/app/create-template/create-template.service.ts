@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { BackgroundTemplate, Template, TypeAction, TypeTemplate, apiUrl } from './create-template';
+import { BackgroundTemplate, Template, TemplateGroup, TypeAction, TypeTemplate, apiUrl } from './create-template';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class CreateTemplateService {
   //data
   background: BackgroundTemplate = new BackgroundTemplate();
-  listElement: Template[] = [];
+  listElement: (Template | TemplateGroup)[] = [];
   listValueDynamic: any[] = [];
   listQrValueDynamic: any[] = []
   scaleDefault = 854;
@@ -36,7 +36,7 @@ export class CreateTemplateService {
     this.idTemplate = new BehaviorSubject<any>('');
     this.loading = new BehaviorSubject<any>(false);
     this.listElement = [...Array(1)].map((ele: any, index: number) => {
-      return new Template('element' + index, 12 + index);
+      return new Template('element ' + index, 12 + index);
     });
     this.load_list_element = new BehaviorSubject<any>(this.listElement);
   }
@@ -74,9 +74,7 @@ export class CreateTemplateService {
   }
 
   changeTemplate(action: TypeAction, template: Template | BackgroundTemplate,) {
-    console.log(123);
-
-    if (template instanceof Template) {
+    if (template instanceof Template || template instanceof TemplateGroup) {
       switch (action) {
         case TypeAction.COPY:
           const clone = template.clone();
@@ -86,7 +84,7 @@ export class CreateTemplateService {
           this.listElement.push(clone);
           break;
         case TypeAction.CHANGE:
-          this.listElement = this.listElement.map((ele: Template) => {
+          this.listElement = this.listElement.map((ele: Template | TemplateGroup) => {
             if (ele.id === template.id) {
               return template
             }
@@ -94,7 +92,7 @@ export class CreateTemplateService {
           });
           break;
         case TypeAction.DELETE:
-          this.listElement = this.listElement.filter((ele: Template) => ele.id !== template.id);
+          this.listElement = this.listElement.filter((ele: Template | TemplateGroup) => ele.id !== template.id);
           this.load_list_element.next(this.listElement);
           this.active_template.next(null);
           break;
@@ -108,10 +106,14 @@ export class CreateTemplateService {
     }
   }
 
+  addGroup() {
+    this.listElement.push(new TemplateGroup('group ' + (this.listElement.filter((ele) => ele instanceof TemplateGroup).length + 1)));
+  }
+
   addTemplate() {
     this.listElement = [
       ...this.listElement,
-      new Template('element ' + (this.listElement.length + 1), 10),
+      new Template('element ' + ((this.listElement.filter((ele) => ele instanceof Template).length + 1)), 10),
     ];
     this.load_list_element.next(this.listElement);
   }

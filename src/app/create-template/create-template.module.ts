@@ -10,6 +10,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CreateTemplateViewGroupComponent } from './create-template-view/create-template-view-group/create-template-view-group.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CreateTemplateListComponent,
     CreateTemplateViewComponent,
     CreateTemplateViewEleComponent,
+    CreateTemplateViewGroupComponent,
   ],
   imports: [
     CommonModule,

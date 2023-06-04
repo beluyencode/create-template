@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Template, TypeAction } from '../create-template';
+import { Template, TemplateGroup, TypeAction } from '../create-template';
 import { CreateTemplateService } from '../create-template.service';
 
 @Component({
@@ -56,13 +56,22 @@ export class CreateTemplateListComponent implements OnInit {
   }
 
   deleteELe(ele: Template) {
-    console.log(123);
-
     this.createTemplateService.changeTemplate(TypeAction.DELETE, ele);
   }
 
   addEle() {
     this.createTemplateService.addTemplate();
+  }
+
+  addGroup() {
+    this.createTemplateService.addGroup();
+  }
+
+  isGroup(ele: Template | TemplateGroup) {
+    if (ele instanceof Template) {
+      return false;
+    }
+    return true;
   }
 
   viewMode() {
