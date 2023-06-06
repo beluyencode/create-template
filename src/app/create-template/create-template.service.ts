@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { BackgroundTemplate, Template, TemplateGroup, TypeAction, TypeTemplate, apiUrl } from './create-template';
+import { BackgroundTemplate, Template, TemplateGroup, TypeAction, TypeTemplate, apiUrl, checkInState } from './create-template';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
@@ -36,7 +36,7 @@ export class CreateTemplateService {
     this.save_config = new BehaviorSubject<any>(null);
     this.idTemplate = new BehaviorSubject<any>('');
     this.loading = new BehaviorSubject<any>(false);
-    this.edit = new BehaviorSubject<any>(false);
+    this.edit = new BehaviorSubject<any>(true);
     // this.listElement = [...Array(1)].map((ele: any, index: number) => {
     //   return new Template('element ' + index, 12 + index);
     // });
@@ -73,6 +73,20 @@ export class CreateTemplateService {
 
   listen_id_template() {
     return this.idTemplate.asObservable();
+  }
+
+  changeStateCheckIn(state: string) {
+    this.listElement.forEach((item: Template | TemplateGroup) => {
+      if (item instanceof Template) {
+        if (item.type === TypeTemplate.CHECK_IN) {
+          item.checkInOptions.activeType = state as checkInState
+        }
+      } else {
+        item.data.forEach((item2: Template) => {
+          item2.checkInOptions.activeType = state as checkInState
+        })
+      }
+    })
   }
 
   changeTemplate(action: TypeAction, template: Template | BackgroundTemplate | TemplateGroup) {
@@ -142,7 +156,9 @@ export class CreateTemplateService {
   }
 
   addGroup() {
-    this.listElement.push(new TemplateGroup('group ' + (this.listElement.filter((ele) => ele instanceof TemplateGroup).length + 1)));
+    const newELe = new TemplateGroup('group ' + (this.listElement.filter((ele) => ele instanceof TemplateGroup).length + 1));
+    this.listElement.push(newELe);
+    return newELe.id;
   }
 
   addTemplate() {

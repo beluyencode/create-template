@@ -18,7 +18,9 @@ export interface Template {
     borderRadius: number;
     zIndex: number,
     checkInOptions: TemplateCheckIn;
-    idGroup: string
+    idGroup: string;
+    fontWeight: string;
+    fontFamily: string
 }
 
 export interface TemplateGroup {
@@ -51,6 +53,8 @@ export interface TemplateCheckIn {
         width: number;
         height: number;
         align: string;
+        fontWeight: string;
+        fontFamily: string;
     },
     checkedIn: {
         content: string;
@@ -68,6 +72,8 @@ export interface TemplateCheckIn {
         width: number;
         height: number;
         align: string;
+        fontWeight: string;
+        fontFamily: string;
     },
     checkIn: {
         content: string;
@@ -85,6 +91,8 @@ export interface TemplateCheckIn {
         width: number;
         height: number;
         align: string;
+        fontWeight: string;
+        fontFamily: string;
     }
 }
 
@@ -125,6 +133,19 @@ export class TemplateGroup implements TemplateGroup {
     }
 }
 
+export const FontFamily = [
+    '"Times New Roman", Times, serif',
+    'Georgia, serif',
+    'Garamond, serif',
+    'Arial, Helvetica, sans-serif',
+    'Tahoma, Verdana, sans-serif',
+    '"Trebuchet MS", Helvetica, sans-serif',
+    'Geneva, Verdana, sans-serif',
+    '"Courier New", Courier, monospace',
+    '"Brush Script MT", cursive',
+    'Copperplate, Papyrus, fantasy'
+]
+
 export class Template implements Template {
     constructor(name: string, pos: number, idGroup?: string) {
         this.x = pos;
@@ -142,9 +163,11 @@ export class Template implements Template {
         this.background = 'transparent';
         this.rotate = 0;
         this.padding = 0;
-        this.borderRadius = 0
+        this.borderRadius = 0;
         this.url = '';
         this.zIndex = 0;
+        this.fontWeight = '400';
+        this.fontFamily = ''
         if (idGroup) {
             this.zIndex = 1;
             this.idGroup = idGroup
@@ -166,7 +189,9 @@ export class Template implements Template {
                 borderRadius: 0,
                 zIndex: 0,
                 width: 100,
-                height: 100
+                height: 100,
+                fontWeight: '400',
+                fontFamily: ''
             },
             checkedIn: {
                 align: 'left',
@@ -183,7 +208,9 @@ export class Template implements Template {
                 borderRadius: 0,
                 zIndex: 0,
                 width: 100,
-                height: 100
+                height: 100,
+                fontWeight: '400',
+                fontFamily: ''
             },
             checkIn: {
                 align: 'left',
@@ -200,7 +227,9 @@ export class Template implements Template {
                 borderRadius: 0,
                 zIndex: 0,
                 width: 100,
-                height: 100
+                height: 100,
+                fontWeight: '400',
+                fontFamily: ''
             }
         }
     }
@@ -274,3 +303,17 @@ export enum TypeScreen {
     PC = '16/9',
     MOBILE = '9/18'
 }
+
+export const FontWeight = [
+    '100',
+    '200',
+    '300',
+    '400',
+    '500',
+    '600',
+    '700',
+    '800',
+    '900',
+    'bold',
+    'lighter',
+]

@@ -11,7 +11,7 @@ export class CreateTemplateViewGroupComponent implements OnInit {
   @ViewChild('ele') ele: ElementRef;
   @Input() data: TemplateGroup;
   @Input() scale: number;
-  @Input() edit: boolean;
+  edit: boolean;
   isSelect = false;
   private _listeners: any = [];
   activeTemplate: Template | null;
@@ -32,6 +32,9 @@ export class CreateTemplateViewGroupComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.createTemplateService.edit.asObservable().subscribe((res: boolean) => {
+      this.edit = res;
+    });
     if (this.edit) {
       this.createTemplateService.listen_active_template().subscribe((res: Template | null) => {
         this.activeTemplate = res;
@@ -40,13 +43,15 @@ export class CreateTemplateViewGroupComponent implements OnInit {
         } else {
           this.isSelect = false;
         }
-      })
+      });
     }
   }
 
   active(event: MouseEvent) {
-    event.stopPropagation();
-    this.createTemplateService.active_template.next(this.data);
+    if (this.edit) {
+      event.stopPropagation();
+      this.createTemplateService.active_template.next(this.data);
+    }
   }
 
   changeSize(event: MouseEvent) {

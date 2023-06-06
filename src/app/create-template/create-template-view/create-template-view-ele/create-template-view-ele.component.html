@@ -21,7 +21,9 @@
     'white-space': 'pre-line',
     height: '100%'
   }" [ngStyle]="{
-    padding: data.padding + 'px'
+    padding: data.padding + 'px',
+    'font-weight': data.fontWeight,
+    'font-family': data.fontFamily
   }" (mousedown)="moveEle($event)">
     {{data.content}}
     <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
@@ -140,7 +142,9 @@
         'white-space': 'pre-line',
         height: '100%'
       }" [ngStyle]="{
-        padding: data.checkInOptions[data.checkInOptions.activeType].padding + 'px'
+        padding: data.checkInOptions[data.checkInOptions.activeType].padding + 'px',
+        'font-weight': data.checkInOptions[data.checkInOptions.activeType].fontWeight,
+        'font-family': data.checkInOptions[data.checkInOptions.activeType].fontFamily
       }" (mousedown)="moveEle($event)">
         {{data.checkInOptions[data.checkInOptions.activeType].content}}
         <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>

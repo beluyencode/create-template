@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BackgroundTemplate, ObjectId, Template, TemplateGroup, TypeAction, TypeAlign, TypeScreen, TypeTemplate, apiUrl } from '../create-template';
+import { BackgroundTemplate, FontWeight, ObjectId, Template, TemplateGroup, TypeAction, TypeAlign, TypeScreen, TypeTemplate, apiUrl, checkInState, FontFamily } from '../create-template';
 import { CreateTemplateService } from '../create-template.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,30 @@ export class CreateTemplateInfoComponent implements OnInit {
   typeTemplateArray = Object.values(TypeTemplate);
   typeTemplateArrayCheckIn = Object.values(TypeTemplate).filter(ele => ele !== TypeTemplate.CHECK_IN);
   typeTemplate = TypeTemplate;
+  checkOptionValue = checkInState.ERROR;
+  checkOption: any = Object.values(checkInState).map((ele: string) => {
+    switch (ele) {
+      case checkInState.ERROR:
+        return {
+          label: 'lỗi',
+          value: 'notFound'
+        }
+      case checkInState.CHECKED:
+        return {
+          label: 'đã check in',
+          value: 'checkedIn'
+        }
+      case checkInState.CHECKIN:
+        return {
+          label: 'check in',
+          value: 'checkIn'
+        }
+      default:
+        return null;
+    }
+  });
+  fontWeight = FontWeight;
+  fontFamily = FontFamily;
 
   constructor(
     public createTemplateService: CreateTemplateService,
@@ -40,6 +64,11 @@ export class CreateTemplateInfoComponent implements OnInit {
 
   changeScale(value: string) {
     this.createTemplateService.changeScaleScreen.next(value);
+  }
+
+  changeStateCheckin(event: any) {
+    this.createTemplateService.changeStateCheckIn(event);
+
   }
 
   uploadImg(event: any, isCheckIn?: any) {

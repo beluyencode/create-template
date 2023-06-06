@@ -11,7 +11,7 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
   @ViewChild('ele') ele: ElementRef;
   @Input() data: Template | any;
   @Input() scale: number;
-  @Input() edit: boolean = true;
+  edit: boolean = true;
   private _listeners: any = [];
   activeTemplate: Template | null;
   isSelect = false;
@@ -58,6 +58,9 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.createTemplateService.edit.asObservable().subscribe((res: boolean) => {
+      this.edit = res;
+    })
     if (this.edit) {
       this.createTemplateService.listen_active_template().subscribe((res: Template | null) => {
         this.activeTemplate = res;
@@ -71,8 +74,10 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
   }
 
   active(event: MouseEvent) {
-    event.stopPropagation();
-    this.createTemplateService.active_template.next(this.data);
+    if (this.edit) {
+      event.stopPropagation();
+      this.createTemplateService.active_template.next(this.data);
+    }
   }
 
   changeSize(event: MouseEvent) {
@@ -119,10 +124,20 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
           const deltaY = e.clientY - this.prevPos.y;
           const newX = this.data.x + +(deltaX * 100 / (this.data.idGroup ? ((this.createTemplateService.listElement.find((ele: any) => ele.id === this.data.idGroup)?.width || 0) * this.scale) : this.createTemplateService.currentWidth)).toFixed(2);
           const newY = this.data.y + +(deltaY * 100 / (this.data.idGroup ? ((this.createTemplateService.listElement.find((ele: any) => ele.id === this.data.idGroup)?.height || 0) * this.scale) : this.createTemplateService.currentHeight)).toFixed(2);
-          const filterAlignLeft = this.createTemplateService.listElement.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
-            .filter((ele: Template | TemplateGroup) => +(ele.x).toFixed(2) - +newX.toFixed(2) > -.5 && +(ele.x).toFixed(2) - +newX.toFixed(2) < .5);
-          const filterAlignTop = this.createTemplateService.listElement.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
-            .filter((ele: Template | TemplateGroup) => +(ele.y).toFixed(2) - +newY.toFixed(2) > -.5 && +(ele.y).toFixed(2) - +newY.toFixed(2) < .5);
+          if (this.data.idGroup) {
+            const findGroup = this.createTemplateService.listElement.find((ele) => ele.id === this.data.idGroup) as TemplateGroup;
+            if (findGroup) {
+              var filterAlignLeft: any = findGroup.data.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
+                .filter((ele: Template | TemplateGroup) => +(ele.x).toFixed(2) - +newX.toFixed(2) > -.3 && +(ele.x).toFixed(2) - +newX.toFixed(2) < .3);
+              var filterAlignTop: any = findGroup.data.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
+                .filter((ele: Template | TemplateGroup) => +(ele.y).toFixed(2) - +newY.toFixed(2) > -.5 && +(ele.y).toFixed(2) - +newY.toFixed(2) < .5);
+            }
+          } else {
+            var filterAlignLeft: any = this.createTemplateService.listElement.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
+              .filter((ele: Template | TemplateGroup) => +(ele.x).toFixed(2) - +newX.toFixed(2) > - .3 && +(ele.x).toFixed(2) - +newX.toFixed(2) < .3);
+            var filterAlignTop: any = this.createTemplateService.listElement.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
+              .filter((ele: Template | TemplateGroup) => +(ele.y).toFixed(2) - +newY.toFixed(2) > -.5 && +(ele.y).toFixed(2) - +newY.toFixed(2) < .5);
+          }
           if (filterAlignLeft.length || filterAlignTop.length) {
             if (filterAlignLeft.length) {
               this.data.x = filterAlignLeft[0].x;

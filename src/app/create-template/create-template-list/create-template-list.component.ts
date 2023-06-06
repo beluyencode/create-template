@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Template, TemplateGroup, TypeAction } from '../create-template';
+import { Template, TemplateGroup, TypeAction, TypeTemplate } from '../create-template';
 import { CreateTemplateService } from '../create-template.service';
 
 @Component({
@@ -10,6 +10,9 @@ import { CreateTemplateService } from '../create-template.service';
 export class CreateTemplateListComponent implements OnInit {
   listTemplate: any[] = [];
   activeTemplate: Template | any;
+  typeView = 'xem';
+  activeDropdownTemplate: any = [];
+  typeTemplate = TypeTemplate;
 
   constructor(
     public createTemplateService: CreateTemplateService
@@ -18,10 +21,22 @@ export class CreateTemplateListComponent implements OnInit {
   ngOnInit(): void {
     this.createTemplateService.listen_change_list_element().subscribe((res: Template[]) => {
       this.listTemplate = res;
+      this.listTemplate.forEach((ele: Template | TemplateGroup) => {
+        if (ele instanceof TemplateGroup) {
+          this.activeDropdownTemplate.push({
+            id: ele.id,
+            isOpen: false
+          });
+        }
+      })
     });
     this.createTemplateService.listen_active_template().subscribe((res: Template) => {
       this.activeTemplate = res;
     })
+  }
+
+  findGroup(id: string) {
+    return this.activeDropdownTemplate.find((ele: Template | TemplateGroup) => ele.id === id);
   }
 
   fullScreen(event: MouseEvent) {
@@ -47,7 +62,11 @@ export class CreateTemplateListComponent implements OnInit {
   }
 
   hidden(template: Template) {
-    template.hidden = !template.hidden;
+    if (template.type !== TypeTemplate.CHECK_IN) {
+      template.hidden = !template.hidden;
+    } else {
+      template.checkInOptions[template.checkInOptions.activeType].hidden = !template.checkInOptions[template.checkInOptions.activeType].hidden
+    }
   }
 
   save() {
@@ -69,7 +88,10 @@ export class CreateTemplateListComponent implements OnInit {
   }
 
   addGroup() {
-    this.createTemplateService.addGroup();
+    this.activeDropdownTemplate.push({
+      id: this.createTemplateService.addGroup(),
+      isOpen: false
+    });
   }
 
   addEleGroup(group: TemplateGroup) {
@@ -85,7 +107,13 @@ export class CreateTemplateListComponent implements OnInit {
   }
 
   viewMode() {
-
+    if (this.typeView === 'xem') {
+      this.createTemplateService.edit.next(false);
+    } else {
+      this.createTemplateService.edit.next(true);
+    }
+    this.typeView = (this.typeView === 'xem') ? 'edit' : 'xem';
+    this.createTemplateService.active_template.next(null);
   }
 
 }

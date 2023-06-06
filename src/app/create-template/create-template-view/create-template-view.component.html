@@ -24,9 +24,9 @@
     }" [src]="this.createTemplateService.background.url" alt="" draggable='false'>
     <ng-container *ngIf="scale">
       <ng-container *ngFor="let data of listTemplate">
-        <app-create-template-view-ele [edit]='edit' [scale]="scale" [data]="data"
+        <app-create-template-view-ele [scale]="scale" [data]="data"
           *ngIf="!isGroup(data)"></app-create-template-view-ele>
-        <app-create-template-view-group *ngIf="isGroup(data)" [scale]="scale" [edit]='edit'
+        <app-create-template-view-group *ngIf="isGroup(data)" [scale]="scale"
           [data]="data"></app-create-template-view-group>
       </ng-container>
     </ng-container>

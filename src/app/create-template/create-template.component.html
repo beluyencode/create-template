@@ -9,7 +9,7 @@
             left: this.createTemplateService.background.scale === typeScreen.PC ? 'auto' : '50%',
             transform: this.createTemplateService.background.scale === typeScreen.PC ? 'translate(0, -50%)' : 'translate(-50%, -50%)',
         }" [ngClass]="{'view-no-edit-center': !edit}">
-            <app-create-template-view [edit]="edit"></app-create-template-view>
+            <app-create-template-view></app-create-template-view>
         </div>
     </div>
     <div class='template-info' *ngIf="edit">

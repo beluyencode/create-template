@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./create-template-view.component.scss']
 })
 export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
-  @Input() edit: boolean = true;
+  edit: boolean = true;
   @ViewChild('eleView') ele: ElementRef;
   @ViewChild('eleViewParent') eleParent: ElementRef;
   listTemplate: any[];
@@ -37,6 +37,11 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.createTemplateService.edit.asObservable().subscribe((res: boolean) => {
+      console.log(res);
+
+      this.edit = res;
+    })
     this.createTemplateService.listen_id_template().subscribe((res: string) => {
       if (res !== '') {
         this.idTemplate = res;

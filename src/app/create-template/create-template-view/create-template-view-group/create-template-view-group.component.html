@@ -17,7 +17,7 @@
       height: '100%'
     }" (mousedown)="moveEle($event)">
         <div class='view-group'>
-            <app-create-template-view-ele *ngFor="let item of data.data" [edit]='edit' [scale]="scale"
+            <app-create-template-view-ele *ngFor="let item of data.data" [scale]="scale"
                 [data]="item"></app-create-template-view-ele>
         </div>
         <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>

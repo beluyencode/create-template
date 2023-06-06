@@ -5,8 +5,8 @@
             Background
         </span>
         <div>
-            <i class="fa-regular fa-eye" (click)="viewMode()"></i>
-            <span (click)="fullScreen($event)"><i class="fa-solid fa-expand"></i></span>
+            <i class="fa-regular fa-eye" (click)="viewMode()" title="Chế độ xem"></i>
+            <span (click)="fullScreen($event)"><i class="fa-solid fa-expand" title="Toàn màn hình"></i></span>
         </div>
     </div>
     <div class='line'></div>
@@ -20,27 +20,35 @@
                             {{item.name}}
                         </span>
                         <div class='list-item-action'>
-                            <i class="fa-solid fa-plus" (click)="addEleGroup(item)"></i>
-                            <i class="fa-solid fa-copy" (click)="copyEle(item)"></i>
+                            <i class="fa-solid fa-plus" (click)="addEleGroup(item)"
+                                title="Thêm thành phần cho nhóm"></i>
+                            <i class="fa-solid fa-copy" (click)="copyEle(item)" title="Copy nhóm"></i>
                             <i class="fa-regular" [ngClass]="{'fa-eye': !item.hidden, 'fa-eye-slash' : item.hidden}"
-                                (click)="hidden(item)"></i>
-                            <i class="fa-regular fa-trash-can" (click)="deleteELe(item)"></i>
+                                (click)="hidden(item)" title="Ẩn/Hiện"></i>
+                            <i class="fa-regular fa-trash-can" (click)="deleteELe(item)" title="Xóa nhóm"></i>
+                            <i class="fa-solid " (click)="findGroup(item.id).isOpen = !findGroup(item.id).isOpen"
+                                [ngClass]="{'fa-chevron-right' : !findGroup(item.id).isOpen, 'fa-angle-down': findGroup(item.id).isOpen}"></i>
                         </div>
                     </div>
-                    <div *ngFor="let itemGroup of item.data" class='view-group-list-c'
-                        [ngClass]="{'list-item-active' : activeTemplate?.id === itemGroup.id}"
-                        (click)='changeActiveTemplate($event,itemGroup)'>
-                        <li class='view-group-list-c-name'>
-                            <span>
-                                {{itemGroup.name}}
-                            </span>
-                        </li>
-                        <div class='list-item-action'>
-                            <i class="fa-solid fa-copy" (click)="copyEle(itemGroup)"></i>
-                            <i class="fa-regular"
-                                [ngClass]="{'fa-eye': !itemGroup.hidden, 'fa-eye-slash' : itemGroup.hidden}"
-                                (click)="hidden(itemGroup)"></i>
-                            <i class="fa-regular fa-trash-can" (click)="deleteELe(itemGroup)"></i>
+                    <div class='view-group-list-c-div' [ngClass]="{
+                        'active-view-group-list-c-div' : findGroup(item.id).isOpen
+                    }">
+                        <div *ngFor="let itemGroup of item.data" class='view-group-list-c'
+                            [ngClass]="{'list-item-active' : activeTemplate?.id === itemGroup.id}"
+                            (click)='changeActiveTemplate($event,itemGroup)'>
+                            <li class='view-group-list-c-name'>
+                                <span>
+                                    {{itemGroup.name}}
+                                </span>
+                            </li>
+                            <div class='list-item-action'>
+                                <i class="fa-solid fa-copy" (click)="copyEle(itemGroup)" title="Copy mẫu"></i>
+                                <i class="fa-regular" title="Ẩn/Hiện" [ngClass]="{
+                                        'fa-eye': (itemGroup.type !== typeTemplate.CHECK_IN) ? !itemGroup.hidden : !itemGroup.checkInOptions[itemGroup.checkInOptions.activeType].hidden,
+                                        'fa-eye-slash' : (itemGroup.type !== typeTemplate.CHECK_IN) ? itemGroup.hidden : itemGroup.checkInOptions[itemGroup.checkInOptions.activeType].hidden
+                                    }" (click)="hidden(itemGroup)"></i>
+                                <i class="fa-regular fa-trash-can" (click)="deleteELe(itemGroup)" title="Xóa mẫu"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -52,10 +60,12 @@
                         {{item.name}}
                     </span>
                     <div class='list-item-action'>
-                        <i class="fa-solid fa-copy" (click)="copyEle(item)"></i>
-                        <i class="fa-regular" [ngClass]="{'fa-eye': !item.hidden, 'fa-eye-slash' : item.hidden}"
-                            (click)="hidden(item)"></i>
-                        <i class="fa-regular fa-trash-can" (click)="deleteELe(item)"></i>
+                        <i class="fa-solid fa-copy" (click)="copyEle(item)" title="Copy mẫu"></i>
+                        <i class="fa-regular" title="Ẩn/Hiện" [ngClass]="{
+                            'fa-eye': (item.type !== typeTemplate.CHECK_IN) ? !item.hidden : !item.checkInOptions[item.checkInOptions.activeType].hidden,
+                            'fa-eye-slash' : (item.type !== typeTemplate.CHECK_IN) ? item.hidden : item.checkInOptions[item.checkInOptions.activeType].hidden
+                        }" (click)="hidden(item)"></i>
+                        <i class="fa-regular fa-trash-can" (click)="deleteELe(item)" title="Xóa mẫu"></i>
                     </div>
                 </div>
             </ng-container>
@@ -66,6 +76,7 @@
             <button (click)="addEle()">Thêm</button>
             <button (click)="addGroup()">Thêm nhóm</button>
             <button (click)="saveToImg()">Lưu File ảnh</button>
+            <button (click)="viewMode()">Chế độ {{typeView}}</button>
             <button (click)="save()">Lưu</button>
         </div>
     </div>

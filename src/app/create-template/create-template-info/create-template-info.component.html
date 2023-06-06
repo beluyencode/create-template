@@ -32,6 +32,17 @@
                     </ng-select>
                 </div>
             </div>
+            <div class='item'>
+                <div class='item-title'>
+                    Trạng thái check in
+                </div>
+                <div class='item-data'>
+                    <ng-select [(ngModel)]="checkOptionValue" (ngModelChange)="changeStateCheckin($event)"
+                        [clearable]='false' class='custom-ngselect'>
+                        <ng-option *ngFor="let car of checkOption" [value]="car.value">{{car.label}}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
         </ng-container>
         <ng-container *ngIf="isTemplate">
             <div class='item' *ngIf="!isGroup(activeTemplate)">
@@ -148,6 +159,27 @@
                     </div>
                     <div class='item-data'>
                         <input type="number" min='0' [(ngModel)]='activeTemplate.fontSize'>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        In đậm
+                    </div>
+                    <div class='item-data'>
+                        <ng-select [(ngModel)]="activeTemplate.fontWeight" [clearable]='false' class='custom-ngselect'>
+                            <ng-option *ngFor="let item of fontWeight" [value]="item">{{item}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class='item'>
+                    <div class='item-title'>
+                        kiểu chữ
+                        <div class='item-data'>
+                            <ng-select [(ngModel)]="activeTemplate.fontFamily" [clearable]='false'
+                                class='custom-ngselect'>
+                                <ng-option *ngFor="let item of fontFamily" [value]="item">{{item}}</ng-option>
+                            </ng-select>
+                        </div>
                     </div>
                 </div>
                 <div class='item'>
@@ -347,6 +379,30 @@
                         </div>
                         <div class='item'>
                             <div class='item-title'>
+                                In đậm
+                            </div>
+                            <div class='item-data'>
+                                <ng-select
+                                    [(ngModel)]="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].fontWeight"
+                                    [clearable]='false' class='custom-ngselect'>
+                                    <ng-option *ngFor="let item of fontWeight" [value]="item">{{item}}</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class='item'>
+                            <div class='item-title'>
+                                kiểu chữ
+                                <div class='item-data'>
+                                    <ng-select
+                                        [(ngModel)]="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].fontFamily"
+                                        [clearable]='false' class='custom-ngselect'>
+                                        <ng-option *ngFor="let item of fontFamily" [value]="item">{{item}}</ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='item'>
+                            <div class='item-title'>
                                 Màu chữ
                             </div>
                             <div class='item-data'>
@@ -367,8 +423,8 @@
                                 <span
                                     class='item-data-input-color-title'>{{activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].background}}</span>
                                 <span class='transparent'
-                                    (click)="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].background = 'transparent'"><i
-                                        class="fa-regular fa-square"></i></span>
+                                    (click)="activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].background = 'transparent'">
+                                    <i class="fa-regular fa-square"></i></span>
                             </div>
                         </div>
                         <div class='item'>

@@ -12,7 +12,7 @@ import { CreateTemplateService } from './create-template.service';
 })
 export class CreateTemplateComponent implements OnInit {
   @ViewChild('view') ele: ElementRef;
-  @Input() edit = true;
+  edit = true;
   typeScreen = TypeScreen;
 
 

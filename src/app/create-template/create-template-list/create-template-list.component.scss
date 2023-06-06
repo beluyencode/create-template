@@ -73,26 +73,39 @@
             opacity: .7;
         }
 
-        .view-group-list-c {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            line-height: 32px;
-            padding: 0px 10px;
+        .view-group-list-c-div {
+            max-height: 0px;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
 
-            .view-group-list-c-name {
-                span {
-                    position: relative;
-                    left: -10px;
+            .view-group-list-c {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 14px;
+                line-height: 32px;
+                padding: 0px 10px;
+
+                .view-group-list-c-name {
+                    span {
+                        position: relative;
+                        left: -10px;
+                    }
                 }
+            }
+
+            .view-group-list-c:hover {
+                background-color: #D9D9D9;
+                color: black;
             }
         }
 
-        .view-group-list-c:hover {
-            background-color: #D9D9D9;
-            color: black;
+        .active-view-group-list-c-div {
+            max-height: 800px;
+            overflow: auto;
+
         }
+
     }
 
     .view-group-list:hover {
