@@ -1,6 +1,7 @@
 <div class='info'>
     <div class='info-title'>
-        {{activeTemplate.name}}
+        <span>Tên</span>
+        <input type="text" [(ngModel)]='activeTemplate.name'>
     </div>
     <div class='info-view'>
         <ng-container *ngIf="!isTemplate">
@@ -33,7 +34,7 @@
             </div>
         </ng-container>
         <ng-container *ngIf="isTemplate">
-            <div class='item'>
+            <div class='item' *ngIf="!isGroup(activeTemplate)">
                 <div class='item-title'>
                     kiểu Template
                 </div>
@@ -155,7 +156,7 @@
                     </div>
                     <div class='item-data'>
                         <input type="color" [(ngModel)]='activeTemplate.color'>
-                        <span class='item-data-input-color-title'>{{activeTemplate.color}} </span>
+                        <input type="text" [(ngModel)]='activeTemplate.color'>
                     </div>
                 </div>
                 <div class='item'>
@@ -351,9 +352,9 @@
                             <div class='item-data'>
                                 <input type="color"
                                     [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].color'>
-                                <span
-                                    class='item-data-input-color-title'>{{activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].color}}
-                                </span>
+                                <input type="text"
+                                    [(ngModel)]='activeTemplate.checkInOptions[activeTemplate.checkInOptions.activeType].color'>
+
                             </div>
                         </div>
                         <div class='item'>
@@ -495,6 +496,9 @@
                             </div>
                         </div>
                     </ng-container>
+                    <div class='div-action'>
+                        <button (click)="copySameCheckin()">cài đặt giống nhau</button>
+                    </div>
                 </ng-container>
             </ng-container>
         </ng-container>

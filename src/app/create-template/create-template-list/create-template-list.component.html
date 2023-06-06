@@ -1,6 +1,6 @@
 <div class='list'>
     <div class='list-item list-item-fisrt' [ngClass]="{'list-item-active' : !activeTemplate?.id}"
-        (click)='changeActiveTemplate(null)'>
+        (click)='changeActiveTemplate($event,null)'>
         <span>
             Background
         </span>
@@ -11,31 +11,56 @@
     </div>
     <div class='line'></div>
     <div class='list-view'>
-        <div class='list-item' (click)='changeActiveTemplate(item)'
-            [ngClass]="{'list-item-active' : activeTemplate?.id === item.id}" *ngFor="let item of listTemplate">
+        <ng-container *ngFor="let item of listTemplate">
             <ng-container *ngIf="isGroup(item)">
-                <span>
-                    {{item.name}}
-                </span>
-                <div class='list-item-action'>
-                    <i class="fa-solid fa-copy" (click)="copyEle(item)"></i>
-                    <i class="fa-regular" [ngClass]="{'fa-eye': !item.hidden, 'fa-eye-slash' : item.hidden}"
-                        (click)="hidden(item)"></i>
-                    <i class="fa-regular fa-trash-can" (click)="deleteELe(item)"></i>
+                <div class='view-group-list' [ngClass]="{'list-item-active' : activeTemplate?.id === item.id}"
+                    (click)='changeActiveTemplate($event,item)'>
+                    <div class='view-group-list-p'>
+                        <span>
+                            {{item.name}}
+                        </span>
+                        <div class='list-item-action'>
+                            <i class="fa-solid fa-plus" (click)="addEleGroup(item)"></i>
+                            <i class="fa-solid fa-copy" (click)="copyEle(item)"></i>
+                            <i class="fa-regular" [ngClass]="{'fa-eye': !item.hidden, 'fa-eye-slash' : item.hidden}"
+                                (click)="hidden(item)"></i>
+                            <i class="fa-regular fa-trash-can" (click)="deleteELe(item)"></i>
+                        </div>
+                    </div>
+                    <div *ngFor="let itemGroup of item.data" class='view-group-list-c'
+                        [ngClass]="{'list-item-active' : activeTemplate?.id === itemGroup.id}"
+                        (click)='changeActiveTemplate($event,itemGroup)'>
+                        <li class='view-group-list-c-name'>
+                            <span>
+                                {{itemGroup.name}}
+                            </span>
+                        </li>
+                        <div class='list-item-action'>
+                            <i class="fa-solid fa-copy" (click)="copyEle(itemGroup)"></i>
+                            <i class="fa-regular"
+                                [ngClass]="{'fa-eye': !itemGroup.hidden, 'fa-eye-slash' : itemGroup.hidden}"
+                                (click)="hidden(itemGroup)"></i>
+                            <i class="fa-regular fa-trash-can" (click)="deleteELe(itemGroup)"></i>
+                        </div>
+                    </div>
                 </div>
             </ng-container>
             <ng-container *ngIf="!isGroup(item)">
-                <span>
-                    {{item.name}}
-                </span>
-                <div class='list-item-action'>
-                    <i class="fa-solid fa-copy" (click)="copyEle(item)"></i>
-                    <i class="fa-regular" [ngClass]="{'fa-eye': !item.hidden, 'fa-eye-slash' : item.hidden}"
-                        (click)="hidden(item)"></i>
-                    <i class="fa-regular fa-trash-can" (click)="deleteELe(item)"></i>
+                <div class='list-item' (click)='changeActiveTemplate($event,item)'
+                    [ngClass]="{'list-item-active' : activeTemplate?.id === item.id}">
+                    <span>
+                        {{item.name}}
+                    </span>
+                    <div class='list-item-action'>
+                        <i class="fa-solid fa-copy" (click)="copyEle(item)"></i>
+                        <i class="fa-regular" [ngClass]="{'fa-eye': !item.hidden, 'fa-eye-slash' : item.hidden}"
+                            (click)="hidden(item)"></i>
+                        <i class="fa-regular fa-trash-can" (click)="deleteELe(item)"></i>
+                    </div>
                 </div>
             </ng-container>
-        </div>
+        </ng-container>
+
         <div class='line'></div>
         <div class='div-action'>
             <button (click)="addEle()">Thêm</button>

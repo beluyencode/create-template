@@ -11,6 +11,23 @@
         line-height: 32px;
         font-weight: 500;
         align-items: center;
+
+        span {
+            margin-right: 10px;
+        }
+
+        input {
+            width: 100%;
+            border: 1px solid #b4b4b4;
+            padding: 6px 6px;
+            border-radius: 4px;
+        }
+
+
+        input:focus-visible {
+            outline: none;
+
+        }
     }
 
     .info-view {
@@ -117,7 +134,7 @@
             input {
                 width: 100%;
                 border: 1px solid #b4b4b4;
-                padding: 3px 6px;
+                padding: 6px 6px;
                 border-radius: 4px;
             }
 
@@ -149,5 +166,23 @@
             }
 
         }
+    }
+}
+
+.div-action {
+    margin: 10px 6px;
+
+    button {
+        border-radius: 3px;
+        border: none;
+        background-color: #0d99ff;
+        color: white;
+        padding: 3px 11px;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        opacity: .7;
     }
 }

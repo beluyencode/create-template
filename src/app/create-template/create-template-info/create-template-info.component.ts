@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BackgroundTemplate, ObjectId, Template, TypeAction, TypeAlign, TypeScreen, TypeTemplate, apiUrl } from '../create-template';
+import { BackgroundTemplate, ObjectId, Template, TemplateGroup, TypeAction, TypeAlign, TypeScreen, TypeTemplate, apiUrl } from '../create-template';
 import { CreateTemplateService } from '../create-template.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -90,9 +90,24 @@ export class CreateTemplateInfoComponent implements OnInit {
     })
   }
 
+  isGroup(ele: any) {
+    if (ele instanceof TemplateGroup) {
+      return true;
+    }
+    return false;
+  }
+
   removeInfo(info: any) {
     this.activeTemplate.checkInOptions[this.activeTemplate.checkInOptions.activeType].right.content.listRow =
       this.activeTemplate.checkInOptions[this.activeTemplate.checkInOptions.activeType].right.content.listRow.filter((item: any) => item.id !== info.id);
+  }
+
+  copySameCheckin() {
+    const prev = this.activeTemplate.checkInOptions[this.activeTemplate.checkInOptions.activeType];
+    (this.activeTemplate as Template).checkInOptions.notFound = { ...prev };
+    (this.activeTemplate as Template).checkInOptions.checkIn = { ...prev };
+    (this.activeTemplate as Template).checkInOptions.checkedIn = { ...prev };
+    this.toastr.success('Trạng thái check in, đã check in và lỗi đã được cài đặt giống nhau');
   }
 
 }

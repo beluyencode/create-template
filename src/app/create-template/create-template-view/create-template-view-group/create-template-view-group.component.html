@@ -1,1 +1,34 @@
-<p>create-template-view-group works!</p>
+<div class='view-ele' [style]="{
+    position: 'absolute',
+    cursor: 'pointer',
+   'line-break': 'anywhere'
+  }" #ele *ngIf="scale" [ngStyle]="{
+      display: data.hidden ? 'none' : 'block',
+      top: data.y  + '%',
+      left: data.x  + '%',
+      width: data.width ? data.width * scale  +'px' : 'auto',
+      height: data.height ? data.height * scale  +'px' : 'auto',
+      'z-index': data.zIndex
+    }" (click)="active($event)">
+    <div class='view-ele-rev' [style]="{
+      position: 'relative',
+      width: '100%',
+      'white-space': 'pre-line',
+      height: '100%'
+    }" (mousedown)="moveEle($event)">
+        <div class='view-group'>
+            <app-create-template-view-ele *ngFor="let item of data.data" [edit]='edit' [scale]="scale"
+                [data]="item"></app-create-template-view-ele>
+        </div>
+        <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
+        <div class='view-ele-ab' *ngIf="isSelect">
+            <!-- <div class="dotnet dotnet-top-left" (mousedown)="changeSize($event)"></div>
+        <div class="dotnet dotnet-top-right" (mousedown)="changeSize($event)"></div>
+        <div class="dotnet dotnet-bottom-right" (mousedown)="changeSize($event)"></div> -->
+            <!-- <div class="rotate" (mousedown)="rotate($event)" *ngIf="edit">
+                <i class="fa-solid fa-rotate-left"></i>
+            </div> -->
+            <div class="dotnet dotnet-bottom-left" *ngIf="edit" (mousedown)="changeSize($event)"></div>
+        </div>
+    </div>
+</div>

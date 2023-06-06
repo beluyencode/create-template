@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import { Template, TypeScreen } from './create-template';
+import { Template, TemplateGroup, TypeScreen } from './create-template';
 import { CreateTemplateService } from './create-template.service';
 
 @Component({
@@ -33,6 +33,10 @@ export class CreateTemplateComponent implements OnInit {
           value: '{{rank["name"]}}',
           label: 'Hạng khách hàng'
         },
+        {
+          value: '{{time_checkin}}',
+          label: 'Thời gian check in'
+        },
         ...event.data.event.params_name.map((ele: string) => {
           return {
             value: `{{params["${ele}"] }}`,
@@ -53,6 +57,25 @@ export class CreateTemplateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.createTemplateService.getTemplateSample().subscribe((res: any) => {
+      const newTemplateGroup = new TemplateGroup('');
+      const newTemplate = new Template('', 0);
+      this.createTemplateService.listElement = res.map((ele: any) => {
+        if (ele.data) {
+          return newTemplateGroup.clone().convertType({
+            ...ele,
+            data: ele.data.map((ele2: any) => {
+              return newTemplate.clone().convertType(ele2);
+            })
+          });
+        } else {
+          return newTemplate.clone().convertType(ele);
+        }
+      })
+      console.log(this.createTemplateService.listElement);
+
+      this.createTemplateService.load_list_element.next(this.createTemplateService.listElement);
+    })
     this.createTemplateService.listen_id_template().subscribe((res: string) => {
       if (res !== '' && typeof res === 'string') {
         this.createTemplateService.getData(res).subscribe((res: any) => {

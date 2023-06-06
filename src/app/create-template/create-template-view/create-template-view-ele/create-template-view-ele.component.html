@@ -123,7 +123,7 @@
      'line-break': 'anywhere'
     }" [ngStyle]="{
         color: data.checkInOptions[data.checkInOptions.activeType].color,
-        'font-size': data.fontSize * scale +'px',
+        'font-size': data.checkInOptions[data.checkInOptions.activeType].fontSize * scale +'px',
         display: data.checkInOptions[data.checkInOptions.activeType].hidden ? 'none' : 'block',
         top: data.y  + '%',
         left: data.x  + '%',
@@ -145,12 +145,18 @@
         {{data.checkInOptions[data.checkInOptions.activeType].content}}
         <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
         <div class='view-ele-ab' *ngIf="isSelect">
+          <div class='tag-check-in' *ngIf="edit">
+            <ng-select appendTo="body" [(ngModel)]="data.checkInOptions.activeType" [clearable]='false'
+              class='custom-ngselect'>
+              <ng-option *ngFor="let car of checkOption" [value]="car!.value">{{car!.label}}</ng-option>
+            </ng-select>
+          </div>
           <!-- <div class="dotnet dotnet-top-left" (mousedown)="changeSize($event)"></div>
           <div class="dotnet dotnet-top-right" (mousedown)="changeSize($event)"></div>
           <div class="dotnet dotnet-bottom-right" (mousedown)="changeSize($event)"></div> -->
-          <div class="rotate" (mousedown)="rotate($event)" *ngIf="edit">
-            <i class="fa-solid fa-rotate-left"></i>
-          </div>
+          <!-- <div class="rotate" (mousedown)="rotate($event)" *ngIf="edit">
+              <i class="fa-solid fa-rotate-left"></i>
+            </div> -->
           <div class="dotnet dotnet-bottom-left" *ngIf="edit" (mousedown)="changeSize($event)"></div>
         </div>
       </div>
@@ -165,8 +171,8 @@
         display: data.checkInOptions[data.checkInOptions.activeType].hidden ? 'none' : 'block',
         top: data.y  + '%',
         left: data.x  + '%',
-        width: data.checkInOptions[data.checkInOptions.activeType].width ? data.width * scale  +'px' : 'auto',
-        height: data.checkInOptions[data.checkInOptions.activeType].height ? data.height * scale  +'px' : 'auto',
+        width: data.checkInOptions[data.checkInOptions.activeType].width ?  data.checkInOptions[data.checkInOptions.activeType].width * scale  +'px' : 'auto',
+        height: data.checkInOptions[data.checkInOptions.activeType].height ? data.checkInOptions[data.checkInOptions.activeType].height * scale  +'px' : 'auto',
         transform: 'rotate('+ data.rotate + 'deg'+')',
         'border-radius': data.checkInOptions[data.checkInOptions.activeType].borderRadius + 'px',
         'z-index': data.zIndex
@@ -189,12 +195,18 @@
         </div>
         <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
         <div class='view-ele-ab' *ngIf="isSelect">
+          <div class='tag-check-in' *ngIf="edit">
+            <ng-select appendTo="body" [(ngModel)]="data.checkInOptions.activeType" [clearable]='false'
+              class='custom-ngselect'>
+              <ng-option *ngFor="let car of checkOption" [value]="car!.value">{{car!.label}}</ng-option>
+            </ng-select>
+          </div>
           <!-- <div class="dotnet dotnet-top-left" (mousedown)="changeSize($event)"></div>
           <div class="dotnet dotnet-top-right" (mousedown)="changeSize($event)"></div>
           <div class="dotnet dotnet-bottom-right" (mousedown)="changeSize($event)"></div> -->
-          <div class="rotate" (mousedown)="rotate($event)" *ngIf="edit">
+          <!-- <div class="rotate" (mousedown)="rotate($event)" *ngIf="edit">
             <i class="fa-solid fa-rotate-left"></i>
-          </div>
+          </div> -->
           <div class="dotnet dotnet-bottom-left" *ngIf="edit" (mousedown)="changeSize($event)"></div>
         </div>
       </div>
@@ -209,8 +221,8 @@
         display: data.checkInOptions[data.checkInOptions.activeType].hidden ? 'none' : 'block',
         top: data.y  + '%',
         left: data.x  + '%',
-        width: data.checkInOptions[data.checkInOptions.activeType].width ? data.width * scale  +'px' : 'auto',
-        height: data.checkInOptions[data.checkInOptions.activeType].height ? data.height * scale  +'px' : 'auto',
+        width: data.checkInOptions[data.checkInOptions.activeType].width ? data.checkInOptions[data.checkInOptions.activeType].width * scale  +'px' : 'auto',
+        height: data.checkInOptions[data.checkInOptions.activeType].height ? data.checkInOptions[data.checkInOptions.activeType].height * scale  +'px' : 'auto',
         transform: 'rotate('+ data.rotate + 'deg'+')',
         'border-radius': data.checkInOptions[data.checkInOptions.activeType].borderRadius* scale  + 'px',
         'background-color': data.checkInOptions[data.checkInOptions.activeType].background,
@@ -224,12 +236,18 @@
       }" (mousedown)="moveEle($event)">
         <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
         <div class='view-ele-ab' *ngIf="isSelect">
+          <div class='tag-check-in' *ngIf="edit">
+            <ng-select appendTo="body" [(ngModel)]="data.checkInOptions.activeType" [clearable]='false'
+              class='custom-ngselect'>
+              <ng-option *ngFor="let car of checkOption" [value]="car!.value">{{car!.label}}</ng-option>
+            </ng-select>
+          </div>
           <!-- <div class="dotnet dotnet-top-left" (mousedown)="changeSize($event)"></div>
           <div class="dotnet dotnet-top-right" (mousedown)="changeSize($event)"></div>
           <div class="dotnet dotnet-bottom-right" (mousedown)="changeSize($event)"></div> -->
-          <div class="rotate" (mousedown)="rotate($event)" *ngIf="edit">
+          <!-- <div class="rotate" (mousedown)="rotate($event)" *ngIf="edit">
             <i class="fa-solid fa-rotate-left"></i>
-          </div>
+          </div> -->
           <div class="dotnet dotnet-bottom-left" *ngIf="edit" (mousedown)="changeSize($event)"></div>
         </div>
       </div>
@@ -237,3 +255,6 @@
   </ng-container>
 
 </ng-container>
+<!-- 
+<app-create-template-view-group *ngIf="data.idGroup" [scale]="scale" [edit]='edit'
+  [data]="data"></app-create-template-view-group> -->

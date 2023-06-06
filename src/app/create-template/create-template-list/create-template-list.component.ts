@@ -8,7 +8,7 @@ import { CreateTemplateService } from '../create-template.service';
   styleUrls: ['./create-template-list.component.scss']
 })
 export class CreateTemplateListComponent implements OnInit {
-  listTemplate: Template[] = [];
+  listTemplate: any[] = [];
   activeTemplate: Template | any;
 
   constructor(
@@ -29,7 +29,8 @@ export class CreateTemplateListComponent implements OnInit {
     this.createTemplateService.fullScreen.next(true);
   }
 
-  changeActiveTemplate(template: Template | null) {
+  changeActiveTemplate(event: MouseEvent, template: Template | null) {
+    event.stopPropagation();
     if (template) {
       if (template.id !== this.activeTemplate?.id) {
         this.createTemplateService.active_template.next(template);
@@ -40,6 +41,8 @@ export class CreateTemplateListComponent implements OnInit {
   }
 
   copyEle(template: Template) {
+    console.log(template);
+
     this.createTemplateService.changeTemplate(TypeAction.COPY, template)
   }
 
@@ -48,6 +51,8 @@ export class CreateTemplateListComponent implements OnInit {
   }
 
   save() {
+    console.log(this.createTemplateService.listElement);
+
     this.createTemplateService.save_config.next(true);
   }
 
@@ -65,6 +70,11 @@ export class CreateTemplateListComponent implements OnInit {
 
   addGroup() {
     this.createTemplateService.addGroup();
+  }
+
+  addEleGroup(group: TemplateGroup) {
+    group.data.push(new Template(`ele ${group.data.length + 1} (group ${(this.listTemplate.filter((ele) => ele instanceof TemplateGroup).length)})`, 10, group.id))
+
   }
 
   isGroup(ele: Template | TemplateGroup) {

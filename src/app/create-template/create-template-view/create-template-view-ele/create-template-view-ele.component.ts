@@ -9,7 +9,7 @@ import { CreateTemplateService } from '../../create-template.service';
 })
 export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
   @ViewChild('ele') ele: ElementRef;
-  @Input() data: Template;
+  @Input() data: Template | any;
   @Input() scale: number;
   @Input() edit: boolean = true;
   private _listeners: any = [];
@@ -77,23 +77,27 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
 
   changeSize(event: MouseEvent) {
     event.stopPropagation();
+    console.log(this.data);
+
     if (this.isSelect) {
       this.prevSize = {
         x: event.clientX,
         y: event.clientY,
         width: this.activeTemplate?.type !== TypeTemplate.CHECK_IN ? this.data.width : this.data.checkInOptions[this.data.checkInOptions.activeType].width,
         height: this.activeTemplate?.type !== TypeTemplate.CHECK_IN ? this.data.height : this.data.checkInOptions[this.data.checkInOptions.activeType].height
-      }
+      };
+      console.log(this.prevSize);
+
       this._listeners.push(
         this.renderer.listen(document, 'mousemove', (e) => {
           const dx = e.clientX - this.prevSize.x;
           const dy = e.clientY - this.prevSize.y;
           if (this.activeTemplate?.type !== TypeTemplate.CHECK_IN) {
-            this.data.width = this.prevSize.width + (Math.round((dx) * 100) / 100);
-            this.data.height = this.prevSize.height + (Math.round((dy) * 100) / 100);
+            this.data.width = Math.round(this.prevSize.width + (Math.round((dx / this.scale) * 100) / 100));
+            this.data.height = Math.round(this.prevSize.height + (Math.round((dy / this.scale) * 100) / 100));
           } else {
-            this.data.checkInOptions[this.data.checkInOptions.activeType].width = this.prevSize.width + (Math.round((dx) * 100) / 100);
-            this.data.checkInOptions[this.data.checkInOptions.activeType].height = this.prevSize.height + (Math.round((dy) * 100) / 100);
+            this.data.checkInOptions[this.data.checkInOptions.activeType].width = Math.round(this.prevSize.width + (Math.round((dx / this.scale) * 100) / 100));
+            this.data.checkInOptions[this.data.checkInOptions.activeType].height = Math.round(this.prevSize.height + (Math.round((dy / this.scale) * 100) / 100));
           }
         })
       );
@@ -102,6 +106,8 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
   }
 
   moveEle(event: MouseEvent) {
+    event.stopPropagation();
+    event.preventDefault();
     if (this.isSelect && this.edit) {
       this.prevPos = {
         x: event.clientX,
@@ -111,8 +117,8 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
         this.renderer.listen(document, 'mousemove', (e) => {
           const deltaX = e.clientX - this.prevPos.x;
           const deltaY = e.clientY - this.prevPos.y;
-          const newX = this.data.x + +(deltaX * 100 / this.createTemplateService.currentWidth).toFixed(2);
-          const newY = this.data.y + +(deltaY * 100 / this.createTemplateService.currentHeight).toFixed(2);
+          const newX = this.data.x + +(deltaX * 100 / (this.data.idGroup ? ((this.createTemplateService.listElement.find((ele: any) => ele.id === this.data.idGroup)?.width || 0) * this.scale) : this.createTemplateService.currentWidth)).toFixed(2);
+          const newY = this.data.y + +(deltaY * 100 / (this.data.idGroup ? ((this.createTemplateService.listElement.find((ele: any) => ele.id === this.data.idGroup)?.height || 0) * this.scale) : this.createTemplateService.currentHeight)).toFixed(2);
           const filterAlignLeft = this.createTemplateService.listElement.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
             .filter((ele: Template | TemplateGroup) => +(ele.x).toFixed(2) - +newX.toFixed(2) > -.5 && +(ele.x).toFixed(2) - +newX.toFixed(2) < .5);
           const filterAlignTop = this.createTemplateService.listElement.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)

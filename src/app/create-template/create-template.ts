@@ -17,15 +17,20 @@ export interface Template {
     padding: number;
     borderRadius: number;
     zIndex: number,
-    checkInOptions: TemplateCheckIn
+    checkInOptions: TemplateCheckIn;
+    idGroup: string
 }
 
 export interface TemplateGroup {
-    id: string
-    data: Array<Template>,
-    name: string
-    x: number,
-    y: number
+    id: string;
+    data: Template[];
+    name: string;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    hidden: boolean;
+    zIndex: number
 }
 
 export interface TemplateCheckIn {
@@ -99,8 +104,12 @@ export class TemplateGroup implements TemplateGroup {
         this.id = ObjectId();
         this.name = name;
         this.data = [];
-        this.x = 0;
-        this.y = 0
+        this.x = 10;
+        this.y = 10;
+        this.width = 100;
+        this.height = 100;
+        this.hidden = false;
+        this.zIndex = 0
     }
 
     clone() {
@@ -117,13 +126,13 @@ export class TemplateGroup implements TemplateGroup {
 }
 
 export class Template implements Template {
-    constructor(name: string, pos: number) {
+    constructor(name: string, pos: number, idGroup?: string) {
         this.x = pos;
         this.y = pos;
         this.content = name;
         this.name = name;
-        this.width = 100;
-        this.height = 100;
+        this.width = 120;
+        this.height = 120;
         this.color = '#ffffff';
         this.align = TypeAlign.LEFT;
         this.hidden = false;
@@ -136,6 +145,10 @@ export class Template implements Template {
         this.borderRadius = 0
         this.url = '';
         this.zIndex = 0;
+        if (idGroup) {
+            this.zIndex = 1;
+            this.idGroup = idGroup
+        }
         this.checkInOptions = {
             activeType: checkInState.ERROR,
             notFound: {

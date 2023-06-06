@@ -13,6 +13,7 @@ export class CreateTemplateService {
   scaleDefault = 854;
   currentWidth = 0;
   currentHeight = 0;
+  edit;
   //event
   load_list_element;
   fullScreen;
@@ -35,9 +36,10 @@ export class CreateTemplateService {
     this.save_config = new BehaviorSubject<any>(null);
     this.idTemplate = new BehaviorSubject<any>('');
     this.loading = new BehaviorSubject<any>(false);
-    this.listElement = [...Array(1)].map((ele: any, index: number) => {
-      return new Template('element ' + index, 12 + index);
-    });
+    this.edit = new BehaviorSubject<any>(false);
+    // this.listElement = [...Array(1)].map((ele: any, index: number) => {
+    //   return new Template('element ' + index, 12 + index);
+    // });
     this.load_list_element = new BehaviorSubject<any>(this.listElement);
   }
 
@@ -73,15 +75,40 @@ export class CreateTemplateService {
     return this.idTemplate.asObservable();
   }
 
-  changeTemplate(action: TypeAction, template: Template | BackgroundTemplate,) {
+  changeTemplate(action: TypeAction, template: Template | BackgroundTemplate | TemplateGroup) {
     if (template instanceof Template || template instanceof TemplateGroup) {
       switch (action) {
         case TypeAction.COPY:
-          const clone = template.clone();
-          clone.id = this.ObjectId();
-          clone.name = 'element ' + (this.listElement.length + 1);
-          clone.content = 'element ' + (this.listElement.length + 1);
-          this.listElement.push(clone);
+          if (template instanceof Template) {
+            let clone = template.clone();
+            clone.id = this.ObjectId();
+            if (template.idGroup) {
+              const index = this.listElement.findIndex((ele) => ele.id === template.idGroup);
+              clone.name = 'element ' + ((this.listElement[index] as TemplateGroup).data.length + 1) + ` (${(this.listElement[index] as TemplateGroup).name})`;
+              clone.content = 'element ' + ((this.listElement[index] as TemplateGroup).data.length + 1) + ` (${(this.listElement[index] as TemplateGroup).name})`;
+              clone.idGroup = template.idGroup;
+              (this.listElement[index] as TemplateGroup).data.push(clone);
+            } else {
+              clone.name = 'element ' + (this.listElement.length + 1);
+              clone.content = 'element ' + (this.listElement.length + 1);
+              this.listElement.push(clone);
+            }
+          }
+          if (template instanceof TemplateGroup) {
+            let clone = template.clone();
+            clone.id = this.ObjectId();
+            clone.name = 'group ' + (this.listElement.length + 1);
+            clone.data = clone.data.map((ele: Template) => {
+              const newELe = new Template('', 1, clone.id);
+              return newELe.clone().convertType({
+                ...ele,
+                id: this.ObjectId(),
+                idGroup: clone.id,
+                name: ele.name.replace(template.name, clone.name)
+              });
+            });
+            this.listElement.push(clone);
+          }
           break;
         case TypeAction.CHANGE:
           this.listElement = this.listElement.map((ele: Template | TemplateGroup) => {
@@ -92,7 +119,15 @@ export class CreateTemplateService {
           });
           break;
         case TypeAction.DELETE:
-          this.listElement = this.listElement.filter((ele: Template | TemplateGroup) => ele.id !== template.id);
+          if (template instanceof Template) {
+            if (template.idGroup) {
+              const findELe = (this.listElement.find((ele: any) => ele.id === template.idGroup) as TemplateGroup);
+              findELe.data = findELe.data.filter((ele: Template) => ele.id !== template.id);
+            }
+            this.listElement = this.listElement.filter((ele: Template | TemplateGroup) => ele.id !== template.id);
+          } else {
+            this.listElement = this.listElement.filter((ele) => ele.id !== template.id);
+          }
           this.load_list_element.next(this.listElement);
           this.active_template.next(null);
           break;
@@ -136,5 +171,8 @@ export class CreateTemplateService {
         id: id
       }
     })
+  }
+  getTemplateSample() {
+    return this.http.get('assets/json/template_check_in.json')
   }
 }

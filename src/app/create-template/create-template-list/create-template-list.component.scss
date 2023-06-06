@@ -27,7 +27,6 @@
     }
 
     .list-item-active:hover {
-        opacity: 0.8;
         background-color: #0d99ff !important;
         color: white !important;
     }
@@ -51,9 +50,59 @@
         border-bottom: 1px solid #e5e5e5;
     }
 
+    .view-group-list {
+        width: 100%;
+
+
+        .view-group-list-p {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            line-height: 32px;
+            padding: 0px 10px;
+        }
+
+        i {
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        i:hover {
+            opacity: .7;
+        }
+
+        .view-group-list-c {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            line-height: 32px;
+            padding: 0px 10px;
+
+            .view-group-list-c-name {
+                span {
+                    position: relative;
+                    left: -10px;
+                }
+            }
+        }
+
+        .view-group-list-c:hover {
+            background-color: #D9D9D9;
+            color: black;
+        }
+    }
+
+    .view-group-list:hover {
+        background-color: #D9D9D9;
+    }
+
     .list-view {
         overflow-y: auto;
         height: calc(100% - 40px);
+
 
         .div-action {
             display: flex;

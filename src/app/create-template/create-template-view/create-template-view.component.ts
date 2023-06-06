@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { Template, TypeScreen } from '../create-template';
+import { Template, TemplateGroup, TypeScreen } from '../create-template';
 import { CreateTemplateService } from '../create-template.service';
 import html2canvas from 'html2canvas';
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +13,7 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
   @Input() edit: boolean = true;
   @ViewChild('eleView') ele: ElementRef;
   @ViewChild('eleViewParent') eleParent: ElementRef;
-  listTemplate: Template[];
+  listTemplate: any[];
   typeScreen = TypeScreen;
   scale: number;
   loading = false;
@@ -102,15 +102,26 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
         }
         this.changeScale();
         setTimeout(() => {
-          this.createTemplateService.saveConfig({
-            html_content: (this.eleParent.nativeElement as HTMLDivElement).innerHTML,
-            config: {
-              background: this.createTemplateService.background,
-              listElement: this.createTemplateService.listElement
-            },
-            width: this.createTemplateService.background.scale === this.typeScreen.PC ? 2560 : 1059,
-            height: this.createTemplateService.background.scale === this.typeScreen.PC ? 1440 : 2118,
-          }, this.idTemplate).subscribe((res: any) => {
+          if (this.idTemplate) {
+            this.createTemplateService.saveConfig({
+              html_content: (this.eleParent.nativeElement as HTMLDivElement).innerHTML,
+              config: {
+                background: this.createTemplateService.background,
+                listElement: this.createTemplateService.listElement
+              },
+              width: this.createTemplateService.background.scale === this.typeScreen.PC ? 2560 : 1059,
+              height: this.createTemplateService.background.scale === this.typeScreen.PC ? 1440 : 2118,
+            }, this.idTemplate).subscribe((res: any) => {
+              this.renderer2.setStyle(this.ele.nativeElement, 'width', '100%');
+              if (this.createTemplateService.background.scale === this.typeScreen.MOBILE) {
+                this.renderer2.setStyle(this.ele.nativeElement, 'height', '100%');
+              }
+              this.changeScale();
+              this.loading = false;
+              this.createTemplateService.save_config.next(false);
+              this.toastr.success('Lưu thành công');
+            })
+          } else {
             this.renderer2.setStyle(this.ele.nativeElement, 'width', '100%');
             if (this.createTemplateService.background.scale === this.typeScreen.MOBILE) {
               this.renderer2.setStyle(this.ele.nativeElement, 'height', '100%');
@@ -118,9 +129,8 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
             this.changeScale();
             this.loading = false;
             this.createTemplateService.save_config.next(false);
-            this.toastr.success('Lưu thành công');
-
-          })
+            this.loading = false;
+          }
         });
       }
     })
@@ -146,6 +156,13 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
     this.scale = (this.ele.nativeElement as HTMLDivElement).clientWidth / this.createTemplateService.scaleDefault;
     this.createTemplateService.currentWidth = (this.ele.nativeElement as HTMLDivElement).clientWidth;
     this.createTemplateService.currentHeight = (this.ele.nativeElement as HTMLDivElement).clientHeight;
+  }
+
+  isGroup(ele: Template | TemplateGroup) {
+    if (ele instanceof Template) {
+      return false;
+    }
+    return true;
   }
 
   mouseOver(e: MouseEvent) {
