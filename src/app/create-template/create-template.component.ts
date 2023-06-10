@@ -39,7 +39,7 @@ export class CreateTemplateComponent implements OnInit {
         },
         ...event.data.event.params_name.map((ele: string) => {
           return {
-            value: `{{params["${ele}"] }}`,
+            value: `{{params["${ele}"]}}`,
             label: ele
           }
         })

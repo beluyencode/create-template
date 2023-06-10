@@ -74,7 +74,7 @@ export class CreateTemplateInfoComponent implements OnInit {
   uploadImg(event: any, isCheckIn?: any) {
     const file = event.target.files[0];
     const fileType = file['type'];
-    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'svg'];
     if (file) {
       if (!validImageTypes.includes(fileType)) {
         this.toastr.error('file không đúng định dạng');
