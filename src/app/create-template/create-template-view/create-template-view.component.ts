@@ -57,6 +57,9 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
     this.createTemplateService.listen_change_list_element().subscribe((res: Template[]) => {
       if (res) {
         this.listTemplate = res;
+        setTimeout(() => {
+          this.changeScale();
+        });
       }
     });
     this.createTemplateService.loading.asObservable().subscribe((res: boolean) => {
@@ -94,29 +97,51 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
       }
     });
     this.createTemplateService.listen_save_config().subscribe((res: any) => {
-      this.edit = !res;
-      if (res) {
-        this.createTemplateService.active_template.next(null);
-        this.renderer2.setStyle(this.ele.nativeElement, 'width', 99 + '%');
-        this.loading = true;
-        if (this.createTemplateService.background.scale === this.typeScreen.PC) {
-          this.renderer2.setStyle(this.ele.nativeElement, 'width', 2560 + 'px');
-        } else {
-          this.renderer2.setStyle(this.ele.nativeElement, 'width', 1059 + 'px');
-          this.renderer2.setStyle(this.ele.nativeElement, 'height', 2118 + 'px');
-        }
-        this.changeScale();
-        setTimeout(() => {
-          if (this.idTemplate) {
-            this.createTemplateService.saveConfig({
-              html_content: (this.eleParent.nativeElement as HTMLDivElement).innerHTML,
-              config: {
-                background: this.createTemplateService.background,
-                listElement: this.createTemplateService.listElement
-              },
-              width: this.createTemplateService.background.scale === this.typeScreen.PC ? 2560 : 1059,
-              height: this.createTemplateService.background.scale === this.typeScreen.PC ? 1440 : 2118,
-            }, this.idTemplate).subscribe((res: any) => {
+      if (this.createTemplateService.isTemplateEvent) {
+        this.createTemplateService.saveConfigEvent({
+          config: {
+            background: this.createTemplateService.background,
+            listElement: this.createTemplateService.listElement
+          }
+        }).subscribe((res2) => {
+          if (res2) {
+            this.toastr.success('Lưu thành công');
+          }
+        })
+      } else {
+        this.edit = !res;
+        if (res) {
+          this.createTemplateService.active_template.next(null);
+          this.renderer2.setStyle(this.ele.nativeElement, 'width', 99 + '%');
+          this.loading = true;
+          if (this.createTemplateService.background.scale === this.typeScreen.PC) {
+            this.renderer2.setStyle(this.ele.nativeElement, 'width', 2560 + 'px');
+          } else {
+            this.renderer2.setStyle(this.ele.nativeElement, 'width', 1059 + 'px');
+            this.renderer2.setStyle(this.ele.nativeElement, 'height', 2118 + 'px');
+          }
+          this.changeScale();
+          setTimeout(() => {
+            if (this.idTemplate) {
+              this.createTemplateService.saveConfig({
+                html_content: (this.eleParent.nativeElement as HTMLDivElement).innerHTML,
+                config: {
+                  background: this.createTemplateService.background,
+                  listElement: this.createTemplateService.listElement
+                },
+                width: this.createTemplateService.background.scale === this.typeScreen.PC ? 2560 : 1059,
+                height: this.createTemplateService.background.scale === this.typeScreen.PC ? 1440 : 2118,
+              }, this.idTemplate).subscribe((res: any) => {
+                this.renderer2.setStyle(this.ele.nativeElement, 'width', '100%');
+                if (this.createTemplateService.background.scale === this.typeScreen.MOBILE) {
+                  this.renderer2.setStyle(this.ele.nativeElement, 'height', '100%');
+                }
+                this.changeScale();
+                this.loading = false;
+                this.createTemplateService.save_config.next(false);
+                this.toastr.success('Lưu thành công');
+              })
+            } else {
               this.renderer2.setStyle(this.ele.nativeElement, 'width', '100%');
               if (this.createTemplateService.background.scale === this.typeScreen.MOBILE) {
                 this.renderer2.setStyle(this.ele.nativeElement, 'height', '100%');
@@ -124,19 +149,10 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
               this.changeScale();
               this.loading = false;
               this.createTemplateService.save_config.next(false);
-              this.toastr.success('Lưu thành công');
-            })
-          } else {
-            this.renderer2.setStyle(this.ele.nativeElement, 'width', '100%');
-            if (this.createTemplateService.background.scale === this.typeScreen.MOBILE) {
-              this.renderer2.setStyle(this.ele.nativeElement, 'height', '100%');
+              this.loading = false;
             }
-            this.changeScale();
-            this.loading = false;
-            this.createTemplateService.save_config.next(false);
-            this.loading = false;
-          }
-        });
+          });
+        }
       }
     })
     this.createTemplateService.listen_full_screen().subscribe((res: boolean) => {

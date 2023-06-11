@@ -91,8 +91,6 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
         width: this.activeTemplate?.type !== TypeTemplate.CHECK_IN ? this.data.width : this.data.checkInOptions[this.data.checkInOptions.activeType].width,
         height: this.activeTemplate?.type !== TypeTemplate.CHECK_IN ? this.data.height : this.data.checkInOptions[this.data.checkInOptions.activeType].height
       };
-      console.log(this.prevSize);
-
       this._listeners.push(
         this.renderer.listen(document, 'mousemove', (e) => {
           const dx = e.clientX - this.prevSize.x;
@@ -127,18 +125,27 @@ export class CreateTemplateViewEleComponent implements OnInit, AfterViewInit {
           if (this.data.idGroup) {
             const findGroup = this.createTemplateService.listElement.find((ele) => ele.id === this.data.idGroup) as TemplateGroup;
             if (findGroup) {
-              var filterAlignLeft: any = findGroup.data.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
-                .filter((ele: Template | TemplateGroup) => +(ele.x).toFixed(2) - +newX.toFixed(2) > -.3 && +(ele.x).toFixed(2) - +newX.toFixed(2) < .3);
-              var filterAlignTop: any = findGroup.data.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
-                .filter((ele: Template | TemplateGroup) => +(ele.y).toFixed(2) - +newY.toFixed(2) > -.5 && +(ele.y).toFixed(2) - +newY.toFixed(2) < .5);
+              if (this.createTemplateService.listLinkTemplate.length) {
+                findGroup.data.forEach((item) => {
+                  if (this.createTemplateService.listLinkTemplate.includes(item.id)) {
+                    item.x = item.x + +(deltaX * 100 / (findGroup.width * this.scale)).toFixed(2);
+                    item.y = item.y + +(deltaY * 100 / (findGroup.height * this.scale)).toFixed(2)
+                  }
+                })
+              } else {
+                var filterAlignLeft: any = findGroup.data.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
+                  .filter((ele: Template | TemplateGroup) => +(ele.x).toFixed(2) - +newX.toFixed(2) > -.4 && +(ele.x).toFixed(2) - +newX.toFixed(2) < .4);
+                var filterAlignTop: any = findGroup.data.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
+                  .filter((ele: Template | TemplateGroup) => +(ele.y).toFixed(2) - +newY.toFixed(2) > -.5 && +(ele.y).toFixed(2) - +newY.toFixed(2) < .5);
+              }
             }
           } else {
             var filterAlignLeft: any = this.createTemplateService.listElement.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
-              .filter((ele: Template | TemplateGroup) => +(ele.x).toFixed(2) - +newX.toFixed(2) > - .3 && +(ele.x).toFixed(2) - +newX.toFixed(2) < .3);
+              .filter((ele: Template | TemplateGroup) => +(ele.x).toFixed(2) - +newX.toFixed(2) > - .4 && +(ele.x).toFixed(2) - +newX.toFixed(2) < .4);
             var filterAlignTop: any = this.createTemplateService.listElement.filter((ele: Template | TemplateGroup) => this.data.id !== ele.id)
               .filter((ele: Template | TemplateGroup) => +(ele.y).toFixed(2) - +newY.toFixed(2) > -.5 && +(ele.y).toFixed(2) - +newY.toFixed(2) < .5);
           }
-          if (filterAlignLeft.length || filterAlignTop.length) {
+          if (filterAlignLeft?.length || filterAlignTop?.length) {
             if (filterAlignLeft.length) {
               this.data.x = filterAlignLeft[0].x;
             } else {

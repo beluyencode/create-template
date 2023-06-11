@@ -13,7 +13,9 @@ export class CreateTemplateService {
   scaleDefault = 854;
   currentWidth = 0;
   currentHeight = 0;
+  isTemplateEvent: any = null;
   edit;
+  listLinkTemplate: string[] = [];
   //event
   load_list_element;
   fullScreen;
@@ -102,6 +104,8 @@ export class CreateTemplateService {
               clone.content = 'element ' + ((this.listElement[index] as TemplateGroup).data.length + 1) + ` (${(this.listElement[index] as TemplateGroup).name})`;
               clone.idGroup = template.idGroup;
               (this.listElement[index] as TemplateGroup).data.push(clone);
+              console.log(clone.id, template.id);
+
             } else {
               clone.name = 'element ' + (this.listElement.length + 1);
               clone.content = 'element ' + (this.listElement.length + 1);
@@ -123,6 +127,7 @@ export class CreateTemplateService {
             });
             this.listElement.push(clone);
           }
+          this.load_list_element.next(this.listElement);
           break;
         case TypeAction.CHANGE:
           this.listElement = this.listElement.map((ele: Template | TemplateGroup) => {
@@ -173,6 +178,14 @@ export class CreateTemplateService {
     return this.http.post(apiUrl.origin + apiUrl.update, body, {
       params: {
         id: id
+      }
+    })
+  }
+
+  saveConfigEvent(body: any) {
+    return this.http.post(apiUrl.origin + apiUrl.updateEvent, body, {
+      params: {
+        id: this.isTemplateEvent._id
       }
     })
   }

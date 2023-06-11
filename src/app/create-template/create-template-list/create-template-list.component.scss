@@ -87,9 +87,11 @@
                 padding: 0px 10px;
 
                 .view-group-list-c-name {
+                    display: flex;
+                    align-items: center;
+
                     span {
-                        position: relative;
-                        left: -10px;
+                        margin-left: 5px;
                     }
                 }
             }

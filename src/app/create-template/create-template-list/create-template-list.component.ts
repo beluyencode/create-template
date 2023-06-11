@@ -116,4 +116,12 @@ export class CreateTemplateListComponent implements OnInit {
     this.createTemplateService.active_template.next(null);
   }
 
+  selectMany(event: any, template: Template) {
+    if (event.target.checked) {
+      this.createTemplateService.listLinkTemplate.push(template.id)
+    } else {
+      this.createTemplateService.listLinkTemplate = this.createTemplateService.listLinkTemplate.filter((ele) => ele !== template.id);
+    }
+  }
+
 }

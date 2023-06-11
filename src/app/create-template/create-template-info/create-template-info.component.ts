@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BackgroundTemplate, FontWeight, ObjectId, Template, TemplateGroup, TypeAction, TypeAlign, TypeScreen, TypeTemplate, apiUrl, checkInState, FontFamily } from '../create-template';
+import { BackgroundTemplate, FontWeight, ObjectId, Template, TemplateGroup, TypeAction, TypeAlign, TypeScreen, TypeTemplate, apiUrl, checkInState, FontFamily, sampleTemplate, sampleTemplateValue } from '../create-template';
 import { CreateTemplateService } from '../create-template.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -17,6 +17,8 @@ export class CreateTemplateInfoComponent implements OnInit {
   typeTemplateArrayCheckIn = Object.values(TypeTemplate).filter(ele => ele !== TypeTemplate.CHECK_IN);
   typeTemplate = TypeTemplate;
   checkOptionValue = checkInState.ERROR;
+  sampleTemplate = sampleTemplate;
+  selectSampleTemplate = sampleTemplate[0].value;
   checkOption: any = Object.values(checkInState).map((ele: string) => {
     switch (ele) {
       case checkInState.ERROR:
@@ -74,7 +76,7 @@ export class CreateTemplateInfoComponent implements OnInit {
   uploadImg(event: any, isCheckIn?: any) {
     const file = event.target.files[0];
     const fileType = file['type'];
-    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'svg'];
+    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/svg+xml'];
     if (file) {
       if (!validImageTypes.includes(fileType)) {
         this.toastr.error('file không đúng định dạng');
@@ -137,6 +139,20 @@ export class CreateTemplateInfoComponent implements OnInit {
     (this.activeTemplate as Template).checkInOptions.checkIn = { ...prev };
     (this.activeTemplate as Template).checkInOptions.checkedIn = { ...prev };
     this.toastr.success('Trạng thái check in, đã check in và lỗi đã được cài đặt giống nhau');
+  }
+
+  setSampleTemplate() {
+    const newGroup = new TemplateGroup('');
+    this.createTemplateService.listElement.push(newGroup.clone().convertType({
+      ...sampleTemplateValue[this.selectSampleTemplate],
+      data: sampleTemplateValue[this.selectSampleTemplate].data.map((ele2: any) => {
+        const newTemplate = new Template('', 0);
+        newTemplate.idGroup = newGroup.id;
+        return newTemplate.clone().convertType(ele2);
+      })
+    }));
+    this.createTemplateService.load_list_element.next(this.createTemplateService.listElement);
+
   }
 
 }

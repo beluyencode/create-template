@@ -13,7 +13,7 @@
     width: data.width ? data.width * scale  +'px' : 'auto',
     transform: 'rotate('+ data.rotate + 'deg'+')',
     'border-radius': data.borderRadius* scale  + 'px',
-    'z-index': data.zIndex
+    'z-index': isSelect? 9999: data.zIndex
   }" (click)="active($event)">
   <div class='view-ele-rev' [style]="{
     position: 'relative',
@@ -26,7 +26,6 @@
     'font-family': data.fontFamily
   }" (mousedown)="moveEle($event)">
     {{data.content}}
-    <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
     <div class='view-ele-ab' *ngIf="isSelect">
       <!-- <div class="dotnet dotnet-top-left" (mousedown)="changeSize($event)"></div>
       <div class="dotnet dotnet-top-right" (mousedown)="changeSize($event)"></div>
@@ -51,7 +50,7 @@
     height: data.height ? data.height * scale  +'px' : 'auto',
     transform: 'rotate('+ data.rotate + 'deg'+')',
     'border-radius': data.borderRadius + 'px',
-    'z-index': data.zIndex
+    'z-index': isSelect? 9999: data.zIndex
   }" (click)="active($event)">
   <div class='view-ele-rev' [style]="{
     position: 'relative',
@@ -69,7 +68,6 @@
       'border-radius': data.borderRadius + 'px'
     }" *ngIf="data.url === ''">
     </div>
-    <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
     <div class='view-ele-ab' *ngIf="isSelect">
       <!-- <div class="dotnet dotnet-top-left" (mousedown)="changeSize($event)"></div>
       <div class="dotnet dotnet-top-right" (mousedown)="changeSize($event)"></div>
@@ -103,7 +101,6 @@
     'white-space': 'pre-line',
     height: '100%'
   }" (mousedown)="moveEle($event)">
-    <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
     <div class='view-ele-ab' *ngIf="isSelect">
       <!-- <div class="dotnet dotnet-top-left" (mousedown)="changeSize($event)"></div>
       <div class="dotnet dotnet-top-right" (mousedown)="changeSize($event)"></div>
@@ -134,7 +131,7 @@
         width: data.width ? data.checkInOptions[data.checkInOptions.activeType].width * scale  +'px' : 'auto',
         transform: 'rotate('+ data.rotate + 'deg'+')',
         'border-radius': data.checkInOptions[data.checkInOptions.activeType].borderRadius* scale  + 'px',
-        'z-index': data.zIndex
+        'z-index': isSelect? 9999: data.zIndex
       }" (click)="active($event)">
       <div class='view-ele-rev' [style]="{
         position: 'relative',
@@ -147,7 +144,6 @@
         'font-family': data.checkInOptions[data.checkInOptions.activeType].fontFamily
       }" (mousedown)="moveEle($event)">
         {{data.checkInOptions[data.checkInOptions.activeType].content}}
-        <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
         <div class='view-ele-ab' *ngIf="isSelect">
           <div class='tag-check-in' *ngIf="edit">
             <ng-select appendTo="body" [(ngModel)]="data.checkInOptions.activeType" [clearable]='false'
@@ -179,7 +175,7 @@
         height: data.checkInOptions[data.checkInOptions.activeType].height ? data.checkInOptions[data.checkInOptions.activeType].height * scale  +'px' : 'auto',
         transform: 'rotate('+ data.rotate + 'deg'+')',
         'border-radius': data.checkInOptions[data.checkInOptions.activeType].borderRadius + 'px',
-        'z-index': data.zIndex
+        'z-index': isSelect? 9999: data.zIndex
       }" (click)="active($event)">
       <div class='view-ele-rev' [style]="{
         position: 'relative',
@@ -187,7 +183,7 @@
         'white-space': 'pre-line',
         height: '100%'
       }" (mousedown)="moveEle($event)">
-        <img [src]="data.url" [style]="{
+        <img [src]="data.checkInOptions[data.checkInOptions.activeType].url" [style]="{
           width: '100%',
           height: '100%'
         }" [ngStyle]="{
@@ -197,7 +193,6 @@
           'border-radius': data.borderRadius + 'px'
         }" *ngIf="data.checkInOptions[data.checkInOptions.activeType].url === ''">
         </div>
-        <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
         <div class='view-ele-ab' *ngIf="isSelect">
           <div class='tag-check-in' *ngIf="edit">
             <ng-select appendTo="body" [(ngModel)]="data.checkInOptions.activeType" [clearable]='false'
@@ -238,7 +233,6 @@
         'white-space': 'pre-line',
         height: '100%'
       }" (mousedown)="moveEle($event)">
-        <div class='view-ele-ab-no-select' *ngIf="!isSelect && edit"></div>
         <div class='view-ele-ab' *ngIf="isSelect">
           <div class='tag-check-in' *ngIf="edit">
             <ng-select appendTo="body" [(ngModel)]="data.checkInOptions.activeType" [clearable]='false'

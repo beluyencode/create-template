@@ -43,6 +43,19 @@
                     </ng-select>
                 </div>
             </div>
+            <div class='item'>
+                <div class='item-title'>
+                    Mấu template
+                </div>
+                <div class='item-data'>
+                    <ng-select [(ngModel)]="selectSampleTemplate" [clearable]='false' class='custom-ngselect'>
+                        <ng-option *ngFor="let car of sampleTemplate" [value]="car.value">{{car.name}}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class='div-action'>
+                <button (click)="setSampleTemplate()">Cài đặt mẫu </button>
+            </div>
         </ng-container>
         <ng-container *ngIf="isTemplate">
             <div class='item' *ngIf="!isGroup(activeTemplate)">

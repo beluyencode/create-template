@@ -34,13 +34,14 @@
                         'active-view-group-list-c-div' : findGroup(item.id).isOpen
                     }">
                         <div *ngFor="let itemGroup of item.data" class='view-group-list-c'
-                            [ngClass]="{'list-item-active' : activeTemplate?.id === itemGroup.id}"
+                            [ngClass]="{'list-item-active' : activeTemplate?.id === itemGroup.id }"
                             (click)='changeActiveTemplate($event,itemGroup)'>
-                            <li class='view-group-list-c-name'>
+                            <div class='view-group-list-c-name'>
+                                <input type="checkbox" name="" id="" (change)="selectMany($event, itemGroup)">
                                 <span>
                                     {{itemGroup.name}}
                                 </span>
-                            </li>
+                            </div>
                             <div class='list-item-action'>
                                 <i class="fa-solid fa-copy" (click)="copyEle(itemGroup)" title="Copy mẫu"></i>
                                 <i class="fa-regular" title="Ẩn/Hiện" [ngClass]="{

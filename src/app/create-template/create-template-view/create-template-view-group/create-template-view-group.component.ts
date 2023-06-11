@@ -125,4 +125,11 @@ export class CreateTemplateViewGroupComponent implements OnInit {
     );
   }
 
+  isGroup(ele: Template | TemplateGroup) {
+    if (ele instanceof Template) {
+      return false;
+    }
+    return true;
+  }
+
 }

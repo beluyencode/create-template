@@ -49,6 +49,10 @@ export class CreateTemplateComponent implements OnInit {
         label: 'QR code'
       }]
     }
+    if (!event.data.idTemplate && event.data.event) {
+      this.createTemplateService.isTemplateEvent = event.data.event;
+      console.log(this.createTemplateService.isTemplateEvent);
+    }
     this.createTemplateService.idTemplate.next(event.data.idTemplate);
   }
 
@@ -85,6 +89,29 @@ export class CreateTemplateComponent implements OnInit {
           }
         })
       } else {
+        if (this.createTemplateService.isTemplateEvent) {
+          if (this.createTemplateService.isTemplateEvent?.config?.background) {
+            this.createTemplateService.background = this.createTemplateService.isTemplateEvent?.config?.background;
+            this.createTemplateService.active_template.next(null);
+          }
+          if (this.createTemplateService.isTemplateEvent?.config?.listElement) {
+            const newTemplateGroup = new TemplateGroup('');
+            const newTemplate = new Template('', 0);
+            this.createTemplateService.listElement = this.createTemplateService.isTemplateEvent.config?.listElement.map((ele: any) => {
+              if (ele.data) {
+                return newTemplateGroup.clone().convertType({
+                  ...ele,
+                  data: ele.data.map((ele2: any) => {
+                    return newTemplate.clone().convertType(ele2);
+                  })
+                });
+              } else {
+                return newTemplate.clone().convertType(ele);
+              }
+            })
+            this.createTemplateService.load_list_element.next(this.createTemplateService.listElement);
+          }
+        }
         // this.createTemplateService.getData('tpl_chk8f4223aks7397umrg').subscribe((res: any) => {
         //   if (res?.data?.config) {
         //     if (res?.data?.config?.background) {
