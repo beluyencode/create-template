@@ -18,7 +18,6 @@
   <div class='view-ele-rev' [style]="{
     position: 'relative',
     width: '100%',
-    'white-space': 'pre-line',
     height: '100%'
   }" [ngStyle]="{
     padding: data.padding + 'px',
@@ -55,7 +54,6 @@
   <div class='view-ele-rev' [style]="{
     position: 'relative',
     width: '100%',
-    'white-space': 'pre-line',
     height: '100%'
   }" (mousedown)="moveEle($event)">
     <img [src]="data.url" [style]="{
@@ -98,7 +96,6 @@
   <div class='view-ele-rev' [style]="{
     position: 'relative',
     width: '100%',
-    'white-space': 'pre-line',
     height: '100%'
   }" (mousedown)="moveEle($event)">
     <div class='view-ele-ab' *ngIf="isSelect">
@@ -136,7 +133,6 @@
       <div class='view-ele-rev' [style]="{
         position: 'relative',
         width: '100%',
-        'white-space': 'pre-line',
         height: '100%'
       }" [ngStyle]="{
         padding: data.checkInOptions[data.checkInOptions.activeType].padding + 'px',
@@ -180,7 +176,6 @@
       <div class='view-ele-rev' [style]="{
         position: 'relative',
         width: '100%',
-        'white-space': 'pre-line',
         height: '100%'
       }" (mousedown)="moveEle($event)">
         <img [src]="data.checkInOptions[data.checkInOptions.activeType].url" [style]="{
@@ -230,7 +225,6 @@
       <div class='view-ele-rev' [style]="{
         position: 'relative',
         width: '100%',
-        'white-space': 'pre-line',
         height: '100%'
       }" (mousedown)="moveEle($event)">
         <div class='view-ele-ab' *ngIf="isSelect">
