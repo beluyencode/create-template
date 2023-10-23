@@ -37,7 +37,11 @@ export class CreateTemplateComponent implements OnInit {
           value: '{{time_checkin}}',
           label: 'Thời gian check in'
         },
-        ...event.data.event.params_name.map((ele: string) => {
+        {
+          value: '{{email}}',
+          label: 'Email'
+        },
+        ...(event?.data?.event?.params_name || []).map((ele: string) => {
           return {
             value: `{{params["${ele}"]}}`,
             label: ele
@@ -47,6 +51,9 @@ export class CreateTemplateComponent implements OnInit {
       this.createTemplateService.listQrValueDynamic = [{
         value: 'https://api.dev.qrclc.com/api/guest/qrcode/{{_id}}',
         label: 'QR code'
+      }, {
+        value: 'https://api.dev.qrclc.com/static/get?f={{event_id}}/{{num_order}}.{{event_id}}.jpg',
+        label: 'avatar'
       }]
     }
     if (!event.data.idTemplate && event.data.event) {
