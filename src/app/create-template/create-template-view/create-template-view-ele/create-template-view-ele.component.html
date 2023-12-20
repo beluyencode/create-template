@@ -1,7 +1,7 @@
 <div class='view-ele' [style]="{
   position: 'absolute',
   cursor: 'pointer',
- 'line-break': 'anywhere'
+ 
 }" #ele *ngIf="scale && data.type === typeTemplate.TEXT" [ngStyle]="{
     color: data.color,
     'font-size': data.fontSize * scale +'px',
@@ -40,7 +40,7 @@
 <div class='view-ele' [style]="{
   position: 'absolute',
   cursor: 'pointer',
- 'line-break': 'anywhere'
+ 
 }" #ele *ngIf="scale && data.type === typeTemplate.IMAGE" [ngStyle]="{
     display: data.hidden ? 'none' : 'block',
     top: data.y  + '%',
@@ -81,7 +81,7 @@
 <div class='view-ele' [style]="{
   position: 'absolute',
   cursor: 'pointer',
- 'line-break': 'anywhere'
+ 
 }" #ele *ngIf="scale && data.type === typeTemplate.BACKGROUND" [ngStyle]="{
     display: data.hidden ? 'none' : 'block',
     top: data.y  + '%',
@@ -116,7 +116,7 @@
     <div class='view-ele' [style]="{
       position: 'absolute',
       cursor: 'pointer',
-     'line-break': 'anywhere'
+     
     }" [ngStyle]="{
         color: data.checkInOptions[data.checkInOptions.activeType].color,
         'font-size': data.checkInOptions[data.checkInOptions.activeType].fontSize * scale +'px',
@@ -162,7 +162,7 @@
     <div class='view-ele' [style]="{
       position: 'absolute',
       cursor: 'pointer',
-     'line-break': 'anywhere'
+     
     }" #ele [ngStyle]="{
         display: data.checkInOptions[data.checkInOptions.activeType].hidden ? 'none' : 'block',
         top: data.y  + '%',
@@ -210,7 +210,7 @@
     <div class='view-ele' [style]="{
       position: 'absolute',
       cursor: 'pointer',
-     'line-break': 'anywhere'
+     
     }" #ele [ngStyle]="{
         display: data.checkInOptions[data.checkInOptions.activeType].hidden ? 'none' : 'block',
         top: data.y  + '%',

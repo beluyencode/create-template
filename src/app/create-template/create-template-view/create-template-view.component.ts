@@ -117,8 +117,13 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
           if (this.createTemplateService.background.scale === this.typeScreen.PC) {
             this.renderer2.setStyle(this.ele.nativeElement, 'width', 2560 + 'px');
           } else {
-            this.renderer2.setStyle(this.ele.nativeElement, 'width', 1059 + 'px');
-            this.renderer2.setStyle(this.ele.nativeElement, 'height', 2118 + 'px');
+            if (this.createTemplateService.background.scale === this.typeScreen.AlMAZ) {
+              this.renderer2.setStyle(this.ele.nativeElement, 'width', 1059 + 'px');
+              this.renderer2.setStyle(this.ele.nativeElement, 'height', 1766 + 'px');
+            } else {
+              this.renderer2.setStyle(this.ele.nativeElement, 'width', 1059 + 'px');
+              this.renderer2.setStyle(this.ele.nativeElement, 'height', 2118 + 'px');
+            }
           }
           this.changeScale();
           setTimeout(() => {
@@ -130,7 +135,7 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
                   listElement: this.createTemplateService.listElement
                 },
                 width: this.createTemplateService.background.scale === this.typeScreen.PC ? 2560 : 1059,
-                height: this.createTemplateService.background.scale === this.typeScreen.PC ? 1440 : 2118,
+                height: this.createTemplateService.background.scale === this.typeScreen.PC ? 1440 : (this.createTemplateService.background.scale === this.typeScreen.AlMAZ ? 1766 : 2118),
               }, this.idTemplate).subscribe((res: any) => {
                 this.renderer2.setStyle(this.ele.nativeElement, 'width', '100%');
                 if (this.createTemplateService.background.scale === this.typeScreen.MOBILE) {
@@ -173,7 +178,11 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
       this.createTemplateService.scaleDefault = 353;
     } else {
       this.createTemplateService.scaleDefault = 854;
+      if (this.createTemplateService.background.scale === this.typeScreen.AlMAZ) {
+        this.createTemplateService.scaleDefault = 424;
+      }
     }
+    debugger
     this.scale = (this.ele.nativeElement as HTMLDivElement).clientWidth / this.createTemplateService.scaleDefault;
     this.createTemplateService.currentWidth = (this.ele.nativeElement as HTMLDivElement).clientWidth;
     this.createTemplateService.currentHeight = (this.ele.nativeElement as HTMLDivElement).clientHeight;
