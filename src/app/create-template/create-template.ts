@@ -143,7 +143,8 @@ export const FontFamily = [
     'Geneva, Verdana, sans-serif',
     '"Courier New", Courier, monospace',
     '"Brush Script MT", cursive',
-    'Copperplate, Papyrus, fantasy'
+    'Copperplate, Papyrus, fantasy',
+    'Gill Sans MT Pro'
 ]
 
 export class Template implements Template {
@@ -303,6 +304,7 @@ export enum TypeAlign {
 export enum TypeScreen {
     PC = '16/9',
     MOBILE = '9/18',
+    PC_HORIZION = '9/16',
     AlMAZ = '424/707'
 }
 

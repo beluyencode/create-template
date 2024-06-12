@@ -11,6 +11,23 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+@font-face {
+    font-family: 'Gill Sans MT Pro';
+    src: url('assets/GillSansMTPro-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gill Sans MT Pro';
+    src: url('assets/GillSansMTPro-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+
 ::-webkit-scrollbar {
     width: 2px;
     height: 5px;

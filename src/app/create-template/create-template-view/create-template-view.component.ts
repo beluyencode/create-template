@@ -182,7 +182,6 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
         this.createTemplateService.scaleDefault = 424;
       }
     }
-    debugger
     this.scale = (this.ele.nativeElement as HTMLDivElement).clientWidth / this.createTemplateService.scaleDefault;
     this.createTemplateService.currentWidth = (this.ele.nativeElement as HTMLDivElement).clientWidth;
     this.createTemplateService.currentHeight = (this.ele.nativeElement as HTMLDivElement).clientHeight;
