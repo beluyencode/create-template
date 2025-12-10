@@ -144,7 +144,8 @@ export const FontFamily = [
     '"Courier New", Courier, monospace',
     '"Brush Script MT", cursive',
     'Copperplate, Papyrus, fantasy',
-    'Gill Sans MT Pro'
+    'Gill Sans MT Pro',
+    'MMC',
 ]
 
 export class Template implements Template {
