@@ -120,6 +120,9 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
             if (this.createTemplateService.background.scale === this.typeScreen.AlMAZ) {
               this.renderer2.setStyle(this.ele.nativeElement, 'width', 1059 + 'px');
               this.renderer2.setStyle(this.ele.nativeElement, 'height', 1766 + 'px');
+            } else if (this.createTemplateService.background.scale === this.typeScreen.MOBILE) {
+              this.renderer2.setStyle(this.ele.nativeElement, 'width', 1059 + 'px');
+              this.renderer2.setStyle(this.ele.nativeElement, 'height', 1883 + 'px');
             } else {
               this.renderer2.setStyle(this.ele.nativeElement, 'width', 1059 + 'px');
               this.renderer2.setStyle(this.ele.nativeElement, 'height', 2118 + 'px');
@@ -129,13 +132,29 @@ export class CreateTemplateViewComponent implements OnInit, AfterViewInit {
           setTimeout(() => {
             if (this.idTemplate) {
               this.createTemplateService.saveConfig({
-                html_content: (this.eleParent.nativeElement as HTMLDivElement).innerHTML,
+                html_content: `<html><head> <style>@font-face {
+                    font-family: 'MMC';
+                    src: url('https://api.dev.qrclc.com/static/mmc-bold_urs_d0im0sa9io6s73ejmeg02025-12-10 22:13:37.948316248 +0700 +07.woff2') format('woff2');
+                    font-weight: 700;
+                    font-style: normal;
+                    font-display: swap;
+                }
+
+                @font-face {
+                    font-family: 'MMC';
+                    src: url('https://api.dev.qrclc.com/static/mmc-medium_urs_d0im0sa9io6s73ejmeg02025-12-10 22:12:29.604910111 +0700 +07.woff2') format('woff2');
+                    font-weight: 500;
+                    font-style: normal;
+                    font-display: swap;
+                }</style></head><body>${(this.eleParent.nativeElement as HTMLDivElement).innerHTML}</body></html>`,
                 config: {
                   background: this.createTemplateService.background,
                   listElement: this.createTemplateService.listElement
                 },
                 width: this.createTemplateService.background.scale === this.typeScreen.PC ? 2560 : 1059,
-                height: this.createTemplateService.background.scale === this.typeScreen.PC ? 1440 : (this.createTemplateService.background.scale === this.typeScreen.AlMAZ ? 1766 : 2118),
+                height: this.createTemplateService.background.scale === this.typeScreen.PC ? 1440 :
+                  (this.createTemplateService.background.scale === this.typeScreen.AlMAZ ? 1766 :
+                    (this.createTemplateService.background.scale === this.typeScreen.MOBILE ? 1883 : 2118)),
               }, this.idTemplate).subscribe((res: any) => {
                 this.renderer2.setStyle(this.ele.nativeElement, 'width', '100%');
                 if (this.createTemplateService.background.scale === this.typeScreen.MOBILE) {
